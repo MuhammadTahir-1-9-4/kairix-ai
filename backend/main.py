@@ -103,7 +103,8 @@ async def analyze(
             detail="Failed to generate career feedback. Please try again.",
         )
 
-    print("📬 Triggering n8n automation (fire and forget)...")
+    print("📬 Sending email report and logging to Google Sheets...")
+    asyncio.create_task(automation.send_email(user_email, job_goal, feedback))
     asyncio.create_task(automation.send_to_n8n(user_email, job_goal, feedback))
 
     print("✅ Analysis complete. Returning results.")
