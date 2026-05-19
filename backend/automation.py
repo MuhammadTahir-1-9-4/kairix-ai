@@ -61,6 +61,7 @@ def _build_email_html(job_goal: str, feedback: dict) -> str:
 def _send_email_sync(user_email: str, job_goal: str, feedback: dict) -> bool:
     sender = os.getenv("GMAIL_SENDER", "").strip()
     app_password = os.getenv("GMAIL_APP_PASSWORD", "").strip()
+    print(f"📧 Email task started — sender: '{sender}', recipient: '{user_email}', app_pwd set: {bool(app_password)}")
 
     if not sender or not app_password:
         print("ℹ️  Gmail credentials not configured — skipping email.")
@@ -90,7 +91,11 @@ def _send_email_sync(user_email: str, job_goal: str, feedback: dict) -> bool:
 
 
 async def send_email(user_email: str, job_goal: str, feedback: dict) -> bool:
-    return await asyncio.to_thread(_send_email_sync, user_email, job_goal, feedback)
+    try:
+        return await asyncio.to_thread(_send_email_sync, user_email, job_goal, feedback)
+    except Exception as exc:
+        print(f"⚠️  Email task error: {exc}")
+        return False
 
 
 async def send_to_n8n(user_email: str, job_goal: str, feedback: dict) -> bool:
