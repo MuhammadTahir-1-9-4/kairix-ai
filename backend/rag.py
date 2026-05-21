@@ -36,12 +36,16 @@ def retrieve_career_context(query: str) -> str:
             print("⚠️  ChromaDB collection is empty. Using fallback context.")
             return FALLBACK_CONTEXT
 
-        results = vectorstore.similarity_search(query, k=4)
+        results = vectorstore.similarity_search_with_relevance_scores(query, k=6)
 
         if not results:
             return FALLBACK_CONTEXT
 
-        context = "\n\n".join(doc.page_content for doc in results)
+        filtered = [doc for doc, score in results if score >= 0.3]
+        if not filtered:
+            filtered = [doc for doc, _ in results[:3]]
+
+        context = "\n\n".join(doc.page_content for doc in filtered)
         return context
 
     except Exception as exc:
