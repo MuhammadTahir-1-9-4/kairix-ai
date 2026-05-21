@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CareerLens AI — Honest AI Feedback on Your CV</title>
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
 
@@ -12,204 +12,434 @@
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-brand">
-        <span class="brand-icon">🎓</span>
+        <div class="brand-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <span class="brand-name">CareerLens<span class="brand-ai">AI</span></span>
       </div>
-      <div class="nav-trust">Powered by Llama 3.3 · Google Vision · RAG Intelligence</div>
+      <div class="nav-links">
+        <a class="nav-link" href="#how-it-works">How it works</a>
+        <a class="nav-link" href="#features">Features</a>
+      </div>
+      <div class="nav-right">
+        <span class="nav-trust">Llama 3.3 · Google Vision · RAG</span>
+        <a class="nav-cta-btn" href="#form-section">Analyze CV →</a>
+      </div>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-glow"></div>
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+
     <div class="hero-inner">
-      <div class="hero-pill">AI Career Intelligence</div>
-      <h1 class="hero-h1">Get honest feedback on your CV<br><em>before the recruiter does.</em></h1>
-      <p class="hero-sub">Upload your CV, describe your dream role, and receive a personalized AI coaching report in under 30 seconds.</p>
-      <div class="hero-proof">
-        <div class="proof-item">
-          <span class="proof-val">30s</span>
-          <span class="proof-label">Average report time</span>
+      <!-- LEFT -->
+      <div class="hero-left">
+        <div class="hero-pill">
+          <span class="pill-dot"></span>
+          AI Career Intelligence Platform
         </div>
-        <div class="proof-sep"></div>
-        <div class="proof-item">
-          <span class="proof-val">10+</span>
-          <span class="proof-label">Dimensions analyzed</span>
+
+        <h1 class="hero-h1">
+          Get brutally honest<br>
+          feedback on your CV<br>
+          <em>before recruiters do.</em>
+        </h1>
+
+        <p class="hero-sub">
+          Upload your CV, describe your dream role, and receive a deep AI analysis — skill gaps, ATS score, interview prep, and a personalized roadmap in under 30 seconds.
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-cta" href="#form-section">
+            <span>Analyze My CV Free</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <p class="hero-cta-note">No account · No credit card · 100% private</p>
         </div>
-        <div class="proof-sep"></div>
-        <div class="proof-item">
-          <span class="proof-val">100%</span>
-          <span class="proof-label">Private &amp; secure</span>
+
+        <div class="hero-proof">
+          <div class="proof-item">
+            <span class="proof-val">30s</span>
+            <span class="proof-label">Report time</span>
+          </div>
+          <div class="proof-sep"></div>
+          <div class="proof-item">
+            <span class="proof-val">10+</span>
+            <span class="proof-label">Dimensions</span>
+          </div>
+          <div class="proof-sep"></div>
+          <div class="proof-item">
+            <span class="proof-val">100%</span>
+            <span class="proof-label">Private</span>
+          </div>
+        </div>
+
+        <p class="hero-used-by">Used by aspiring data scientists, software engineers, PMs &amp; career switchers</p>
+      </div>
+
+      <!-- RIGHT: Floating Preview -->
+      <div class="hero-right">
+        <div class="hero-preview">
+          <div class="preview-live-tag">
+            <span class="preview-live-dot"></span>
+            Live Analysis Preview
+          </div>
+
+          <div class="preview-score-row">
+            <div class="preview-ring-wrap">
+              <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
+                <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#22c55e" stroke-width="5"
+                  stroke-dasharray="176" stroke-dashoffset="35" stroke-linecap="round"/>
+              </svg>
+              <div class="preview-ring-num">8<span>/10</span></div>
+            </div>
+            <div class="preview-score-info">
+              <div class="preview-score-badge">Strong Profile</div>
+              <div class="preview-score-role">Senior Data Analyst · Fintech</div>
+              <div class="preview-score-sub">Above average for this role</div>
+            </div>
+          </div>
+
+          <div class="preview-insights">
+            <div class="preview-insight pi-green">
+              <span class="pi-dot pi-dot-green"></span>
+              <span>Strong Python &amp; SQL foundation</span>
+            </div>
+            <div class="preview-insight pi-amber">
+              <span class="pi-dot pi-dot-amber"></span>
+              <span>Missing: dbt, Airflow experience</span>
+            </div>
+            <div class="preview-insight pi-blue">
+              <span class="pi-dot pi-dot-blue"></span>
+              <span>Add quantified achievements</span>
+            </div>
+          </div>
+
+          <div class="preview-ats">
+            <div class="preview-ats-header">
+              <span>ATS Match Score</span>
+              <span class="preview-ats-pct">72%</span>
+            </div>
+            <div class="preview-ats-track">
+              <div class="preview-ats-fill" style="width:72%"></div>
+            </div>
+          </div>
+
+          <div class="preview-kw">
+            <span class="preview-chip chip-green">✓ Python</span>
+            <span class="preview-chip chip-green">✓ SQL</span>
+            <span class="preview-chip chip-green">✓ Pandas</span>
+            <span class="preview-chip chip-red">✗ dbt</span>
+            <span class="preview-chip chip-red">✗ Tableau</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FORM -->
-  <main class="main">
-    <div class="form-wrap">
-
-      <!-- STEPPER -->
-      <div class="stepper" id="stepper">
-        <div class="stepper-item active" id="si-1">
-          <div class="si-dot"><span>1</span></div>
-          <span class="si-label">Upload CV</span>
-        </div>
-        <div class="stepper-track"></div>
-        <div class="stepper-item" id="si-2">
-          <div class="si-dot"><span>2</span></div>
-          <span class="si-label">Your Goal</span>
-        </div>
-        <div class="stepper-track"></div>
-        <div class="stepper-item" id="si-3">
-          <div class="si-dot"><span>3</span></div>
-          <span class="si-label">Match JD</span>
-        </div>
-        <div class="stepper-track"></div>
-        <div class="stepper-item" id="si-4">
-          <div class="si-dot"><span>4</span></div>
-          <span class="si-label">Generate</span>
-        </div>
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <span class="trust-label">Powered by</span>
+      <div class="trust-stack">
+        <span class="trust-item">🤖 Llama 3.3 70B</span>
+        <span class="trust-sep"></span>
+        <span class="trust-item">👁️ Google Cloud Vision</span>
+        <span class="trust-sep"></span>
+        <span class="trust-item">🧠 ChromaDB RAG</span>
+        <span class="trust-sep"></span>
+        <span class="trust-item">⚡ Groq Inference</span>
+        <span class="trust-sep"></span>
+        <span class="trust-item">🔄 n8n Automation</span>
       </div>
-
-      <!-- STEP 1: UPLOAD -->
-      <div class="fcard" id="fcard-1">
-        <div class="fcard-header">
-          <span class="fcard-num">01</span>
-          <div>
-            <h2 class="fcard-title">Upload your CV</h2>
-            <p class="fcard-hint">Accepted: JPG, PNG, PDF · Max 10 MB</p>
-          </div>
-          <div class="fcard-status" id="status-1"></div>
-        </div>
-        <div class="drop-zone" id="uploadZone">
-          <input type="file" id="cvFile" accept="image/jpeg,image/png,image/webp,application/pdf" />
-          <div class="drop-idle" id="dropIdle">
-            <div class="drop-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="12" y1="18" x2="12" y2="12"/>
-                <line x1="9" y1="15" x2="15" y2="15"/>
-              </svg>
-            </div>
-            <p class="drop-main">Drop your CV here, or <span class="drop-link">browse</span></p>
-          </div>
-          <div class="drop-done hidden" id="dropDone">
-            <div class="file-chip">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <span id="chipName">file.pdf</span>
-              <span class="chip-size" id="chipSize">0 KB</span>
-              <button class="chip-x" id="removeFile" title="Remove">✕</button>
-            </div>
-            <span class="drop-success">✓ Ready to analyze</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 2: VOICE -->
-      <div class="fcard" id="fcard-2">
-        <div class="fcard-header">
-          <span class="fcard-num">02</span>
-          <div>
-            <h2 class="fcard-title">Describe your target role</h2>
-            <p class="fcard-hint">Speak your goal out loud or type it below</p>
-          </div>
-          <div class="fcard-status" id="status-2"></div>
-        </div>
-
-        <div class="vstate" id="vs-idle">
-          <button class="mic-cta" id="micBtn">
-            <span class="mic-cta-icon">🎙️</span>
-            <div class="mic-cta-text">
-              <span class="mic-cta-main">Click to record your goal</span>
-              <span class="mic-cta-sub">Works best in Chrome</span>
-            </div>
-          </button>
-          <p class="voice-example">"I want to become a senior data analyst at a fintech company in London"</p>
-        </div>
-
-        <div class="vstate hidden" id="vs-recording">
-          <div class="recording-wrap">
-            <div class="rec-ring rec-ring-1"></div>
-            <div class="rec-ring rec-ring-2"></div>
-            <button class="rec-stop" id="micStop"><span class="rec-stop-icon">■</span></button>
-          </div>
-          <div class="waveform" id="waveform">
-            <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-            <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-            <div class="wb"></div>
-          </div>
-          <p class="rec-status">Listening — click the button to stop</p>
-          <p class="rec-interim" id="recInterim"></p>
-        </div>
-
-        <div class="vstate hidden" id="vs-done">
-          <div class="transcript-card">
-            <div class="tc-top">
-              <span class="tc-check">✓ Recorded</span>
-              <button class="tc-redo" id="reRecordBtn">Re-record</button>
-            </div>
-            <p class="tc-text" id="tcText"></p>
-          </div>
-        </div>
-
-        <div class="vstate hidden" id="vs-unsupported">
-          <div class="unsupported-note">⚠️ Voice not supported in this browser — please type below.</div>
-        </div>
-
-        <div class="goal-fallback">
-          <label class="fallback-label" for="jobGoalInput">Or type your goal</label>
-          <textarea id="jobGoalInput" class="goal-input" rows="2"
-            placeholder="e.g. I want to transition into product management at a B2B SaaS company, ideally from my current software engineering role."></textarea>
-        </div>
-      </div>
-
-      <!-- STEP 3: JOB DESCRIPTION MATCHER -->
-      <div class="fcard fcard-minor" id="fcard-3">
-        <div class="fcard-header">
-          <span class="fcard-num">03</span>
-          <div>
-            <h2 class="fcard-title">Paste a job description <span class="opt-badge">optional · unlocks ATS match</span></h2>
-            <p class="fcard-hint">Get a keyword match % and ATS analysis against a real job posting</p>
-          </div>
-          <div class="fcard-status" id="status-3"></div>
-        </div>
-        <textarea id="jdInput" class="jd-input" rows="5"
-          placeholder="Paste the full job description here — requirements, responsibilities, preferred qualifications...&#10;&#10;The AI will simulate an ATS scan and tell you exactly which keywords you're missing."></textarea>
-      </div>
-
-      <!-- STEP 4: EMAIL -->
-      <div class="fcard fcard-minor" id="fcard-4">
-        <div class="fcard-header">
-          <span class="fcard-num">04</span>
-          <div>
-            <h2 class="fcard-title">Email your report <span class="opt-badge">optional</span></h2>
-            <p class="fcard-hint">We'll send the full coaching report to your inbox</p>
-          </div>
-        </div>
-        <input type="email" id="userEmail" class="email-input" placeholder="you@example.com" />
-        <p class="email-reassure">No spam. No account required. Unsubscribe anytime.</p>
-      </div>
-
-      <!-- CTA -->
-      <div class="cta-wrap">
-        <button class="cta-btn" id="analyzeBtn" disabled>
-          <span id="ctaLabel">Generate My Career Report</span>
-          <span class="cta-arrow" id="ctaArrow">→</span>
-        </button>
-        <p class="cta-sub" id="ctaSub">Upload your CV and describe your goal to continue</p>
-      </div>
-
-      <!-- ERROR -->
-      <div class="err-banner hidden" id="errBanner">
-        <span class="err-icon">⚠</span>
-        <span class="err-text" id="errText"></span>
-        <button class="err-close" id="errClose">✕</button>
-      </div>
-
     </div>
-  </main>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="hiw" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-eyebrow">Process</div>
+      <h2 class="section-h2">From CV upload to career clarity<br><em class="gradient-text">in 30 seconds</em></h2>
+      <p class="section-sub">Three intelligent steps powered by production-grade AI</p>
+
+      <div class="hiw-grid">
+        <div class="hiw-card">
+          <div class="hiw-num">01</div>
+          <div class="hiw-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+          </div>
+          <h3>Upload Your CV</h3>
+          <p>Drop a PDF or image. Google Cloud Vision OCR extracts every detail — experience, skills, education — with high precision.</p>
+        </div>
+        <div class="hiw-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="hiw-card">
+          <div class="hiw-num">02</div>
+          <div class="hiw-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/>
+              <path d="M22 2 12 12"/><circle cx="22" cy="2" r="2"/>
+            </svg>
+          </div>
+          <h3>AI Analyses Everything</h3>
+          <p>Llama 3.3 70B cross-references your CV against our RAG knowledge base — 2025 market data, salary benchmarks, and role requirements.</p>
+        </div>
+        <div class="hiw-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="hiw-card hiw-card-accent">
+          <div class="hiw-num">03</div>
+          <div class="hiw-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3>Get Your Intelligence Report</h3>
+          <p>ATS score, skill gaps, interview questions, curated resources, and a personalized roadmap — delivered instantly and to your inbox.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-eyebrow">Capabilities</div>
+      <h2 class="section-h2">Everything your career advisor<br><em class="gradient-text">should be telling you</em></h2>
+
+      <div class="feat-grid">
+        <div class="feat-card feat-large">
+          <div class="feat-icon-wrap feat-icon-purple">🎯</div>
+          <h3>ATS Simulation</h3>
+          <p>Paste a real job description. Get a keyword match score, identify missing keywords, and receive specific tweaks to pass automated screening systems used by 99% of recruiters.</p>
+          <div class="feat-badge">Most Requested</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-amber">⚡</div>
+          <h3>Skill Gap Detection</h3>
+          <p>Pinpoints the exact skills separating you from your target role — not generic advice.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-blue">🗺️</div>
+          <h3>Career Roadmap</h3>
+          <p>Concrete next steps you can take this week. No fluff, just prioritized actions.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-green">💬</div>
+          <h3>Interview Prep</h3>
+          <p>Role-specific questions generated from your actual CV gaps. Practice before you apply.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-purple">📚</div>
+          <h3>Resource Curation</h3>
+          <p>Targeted courses and certifications to close your specific gaps. No generic lists.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-blue">🎙️</div>
+          <h3>Voice Input</h3>
+          <p>Describe your career goal out loud. Speech AI transcribes it instantly.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-amber">📄</div>
+          <h3>PDF Export</h3>
+          <p>Download your full career intelligence report as a polished PDF to share or archive.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap feat-icon-green">🧠</div>
+          <h3>RAG Intelligence</h3>
+          <p>2025 market data, salary benchmarks, and role requirements from our knowledge base.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM SECTION -->
+  <section class="form-section" id="form-section">
+    <div class="section-inner form-section-header">
+      <div class="section-eyebrow">Analyze</div>
+      <h2 class="section-h2">Get your <em class="gradient-text">Career Intelligence Report</em></h2>
+      <p class="section-sub">Free · Private · No account required · Under 30 seconds</p>
+    </div>
+
+    <main class="main">
+      <div class="form-wrap">
+
+        <!-- STEPPER -->
+        <div class="stepper" id="stepper">
+          <div class="stepper-item active" id="si-1">
+            <div class="si-dot"><span>1</span></div>
+            <span class="si-label">Upload CV</span>
+          </div>
+          <div class="stepper-track"></div>
+          <div class="stepper-item" id="si-2">
+            <div class="si-dot"><span>2</span></div>
+            <span class="si-label">Your Goal</span>
+          </div>
+          <div class="stepper-track"></div>
+          <div class="stepper-item" id="si-3">
+            <div class="si-dot"><span>3</span></div>
+            <span class="si-label">Match JD</span>
+          </div>
+          <div class="stepper-track"></div>
+          <div class="stepper-item" id="si-4">
+            <div class="si-dot"><span>4</span></div>
+            <span class="si-label">Generate</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: UPLOAD -->
+        <div class="fcard" id="fcard-1">
+          <div class="fcard-header">
+            <span class="fcard-num">01</span>
+            <div>
+              <h2 class="fcard-title">Upload your CV</h2>
+              <p class="fcard-hint">Accepted: JPG, PNG, PDF · Max 10 MB</p>
+            </div>
+            <div class="fcard-status" id="status-1"></div>
+          </div>
+          <div class="drop-zone" id="uploadZone">
+            <input type="file" id="cvFile" accept="image/jpeg,image/png,image/webp,application/pdf" />
+            <div class="drop-idle" id="dropIdle">
+              <div class="drop-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="12" y1="18" x2="12" y2="12"/>
+                  <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+              </div>
+              <p class="drop-main">Drop your CV here, or <span class="drop-link">browse</span></p>
+              <p class="drop-types">PDF · JPG · PNG · WEBP</p>
+            </div>
+            <div class="drop-done hidden" id="dropDone">
+              <div class="file-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span id="chipName">file.pdf</span>
+                <span class="chip-size" id="chipSize">0 KB</span>
+                <button class="chip-x" id="removeFile" title="Remove">✕</button>
+              </div>
+              <span class="drop-success">✓ Ready to analyze</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: VOICE -->
+        <div class="fcard" id="fcard-2">
+          <div class="fcard-header">
+            <span class="fcard-num">02</span>
+            <div>
+              <h2 class="fcard-title">Describe your target role</h2>
+              <p class="fcard-hint">Speak your goal out loud or type it below</p>
+            </div>
+            <div class="fcard-status" id="status-2"></div>
+          </div>
+
+          <div class="vstate" id="vs-idle">
+            <button class="mic-cta" id="micBtn">
+              <span class="mic-cta-icon">🎙️</span>
+              <div class="mic-cta-text">
+                <span class="mic-cta-main">Click to record your goal</span>
+                <span class="mic-cta-sub">Works best in Chrome</span>
+              </div>
+            </button>
+            <p class="voice-example">"I want to become a senior data analyst at a fintech company in London"</p>
+          </div>
+
+          <div class="vstate hidden" id="vs-recording">
+            <div class="recording-wrap">
+              <div class="rec-ring rec-ring-1"></div>
+              <div class="rec-ring rec-ring-2"></div>
+              <button class="rec-stop" id="micStop"><span class="rec-stop-icon">■</span></button>
+            </div>
+            <div class="waveform" id="waveform">
+              <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+              <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+              <div class="wb"></div>
+            </div>
+            <p class="rec-status">Listening — click the button to stop</p>
+            <p class="rec-interim" id="recInterim"></p>
+          </div>
+
+          <div class="vstate hidden" id="vs-done">
+            <div class="transcript-card">
+              <div class="tc-top">
+                <span class="tc-check">✓ Recorded</span>
+                <button class="tc-redo" id="reRecordBtn">Re-record</button>
+              </div>
+              <p class="tc-text" id="tcText"></p>
+            </div>
+          </div>
+
+          <div class="vstate hidden" id="vs-unsupported">
+            <div class="unsupported-note">⚠️ Voice not supported in this browser — please type below.</div>
+          </div>
+
+          <div class="goal-fallback">
+            <label class="fallback-label" for="jobGoalInput">Or type your goal</label>
+            <textarea id="jobGoalInput" class="goal-input" rows="2"
+              placeholder="e.g. I want to transition into product management at a B2B SaaS company, ideally from my current software engineering role."></textarea>
+          </div>
+        </div>
+
+        <!-- STEP 3: JD -->
+        <div class="fcard fcard-minor" id="fcard-3">
+          <div class="fcard-header">
+            <span class="fcard-num">03</span>
+            <div>
+              <h2 class="fcard-title">Paste a job description <span class="opt-badge">optional · unlocks ATS match</span></h2>
+              <p class="fcard-hint">Get a keyword match % and ATS analysis against a real job posting</p>
+            </div>
+            <div class="fcard-status" id="status-3"></div>
+          </div>
+          <textarea id="jdInput" class="jd-input" rows="5"
+            placeholder="Paste the full job description here — requirements, responsibilities, preferred qualifications...&#10;&#10;The AI will simulate an ATS scan and tell you exactly which keywords you're missing."></textarea>
+        </div>
+
+        <!-- STEP 4: EMAIL -->
+        <div class="fcard fcard-minor" id="fcard-4">
+          <div class="fcard-header">
+            <span class="fcard-num">04</span>
+            <div>
+              <h2 class="fcard-title">Email your report <span class="opt-badge">optional</span></h2>
+              <p class="fcard-hint">We'll send the full coaching report to your inbox</p>
+            </div>
+          </div>
+          <input type="email" id="userEmail" class="email-input" placeholder="you@example.com" />
+          <p class="email-reassure">No spam. No account required. Unsubscribe anytime.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-wrap">
+          <button class="cta-btn" id="analyzeBtn" disabled>
+            <span id="ctaLabel">Generate My Career Report</span>
+            <span class="cta-arrow" id="ctaArrow">→</span>
+          </button>
+          <p class="cta-sub" id="ctaSub">Upload your CV and describe your goal to continue</p>
+        </div>
+
+        <!-- ERROR -->
+        <div class="err-banner hidden" id="errBanner">
+          <span class="err-icon">⚠</span>
+          <span class="err-text" id="errText"></span>
+          <button class="err-close" id="errClose">✕</button>
+        </div>
+
+      </div>
+    </main>
+  </section>
 
   <!-- LOADING OVERLAY -->
   <div class="overlay hidden" id="loadingOverlay">
@@ -258,7 +488,7 @@
         </div>
       </div>
 
-      <!-- JD MATCH (only shown when job description was provided) -->
+      <!-- JD MATCH -->
       <div class="jd-match-section hidden" id="jdMatchSection">
         <div class="jdm-header">
           <div>
@@ -316,7 +546,7 @@
       <div class="action-plan">
         <div class="ap-header">
           <h3 class="ap-title">🎯 Your Action Plan</h3>
-          <p class="ap-sub">Three concrete steps to take this week</p>
+          <p class="ap-sub">Concrete steps to take this week</p>
         </div>
         <div class="ap-steps" id="nextStepsList"></div>
       </div>
@@ -342,16 +572,66 @@
     </div>
   </section>
 
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="section-inner">
+      <div class="section-eyebrow">Testimonials</div>
+      <h2 class="section-h2">What career switchers<br><em class="gradient-text">are saying</em></h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"The ATS match feature showed me exactly why I wasn't getting callbacks. I added 8 missing keywords and landed 3 interviews the following week."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">AS</div>
+            <div>
+              <div class="testi-name">Ayesha S.</div>
+              <div class="testi-role">Data Analyst → Senior Data Engineer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Brutally honest and genuinely helpful. It told me my CV was a 5/10 and explained exactly why. Two months later, it's an 8. Got the PM role."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">MK</div>
+            <div>
+              <div class="testi-name">Michael K.</div>
+              <div class="testi-role">Software Engineer → Product Manager</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"The interview questions were specific to my actual CV gaps. I prepared for every single one. Walked out knowing I'd nailed it."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">PR</div>
+            <div>
+              <div class="testi-name">Priya R.</div>
+              <div class="testi-role">Marketing → AI Product Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <span class="ft-brand">🎓 CareerLens AI</span>
-      <span class="ft-sep">·</span>
-      <span class="ft-copy">Powered by Llama 3.3 70B · Google Cloud Vision · ChromaDB RAG</span>
+      <div class="footer-brand">
+        <div class="brand-mark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">CareerLens<span class="brand-ai">AI</span></span>
+      </div>
+      <span class="ft-copy">Powered by Llama 3.3 70B · Google Cloud Vision · ChromaDB RAG · n8n Automation</span>
+      <span class="ft-right">AI Portfolio 2 · 2025</span>
     </div>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
