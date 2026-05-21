@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CareerLens AI — Honest AI Feedback on Your CV</title>
-  <link rel="stylesheet" href="style.css?v=5" />
+  <title>Kairix — AI Career Intelligence Platform</title>
+  <link rel="stylesheet" href="style.css?v=6" />
 </head>
 <body>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow" id="cursorGlow"></div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -17,7 +20,7 @@
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="brand-name">CareerLens<span class="brand-ai">AI</span></span>
+        <span class="brand-name">Kairix<span class="brand-ai">AI</span></span>
       </div>
       <div class="nav-links">
         <a class="nav-link" href="#how-it-works">How it works</a>
@@ -32,6 +35,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <canvas id="heroCanvas" class="hero-canvas"></canvas>
     <div class="hero-grid-bg"></div>
     <div class="hero-glow hero-glow-1"></div>
     <div class="hero-glow hero-glow-2"></div>
@@ -55,10 +59,16 @@
         </p>
 
         <div class="hero-actions">
-          <a class="hero-cta" href="#form-section">
-            <span>Analyze My CV Free</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+          <div class="hero-cta-row">
+            <a class="hero-cta" href="#form-section">
+              <span>Analyze My CV Free</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button class="hero-cta-secondary" id="sampleReportBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              View Sample Report
+            </button>
+          </div>
           <p class="hero-cta-note">No account · No credit card · 100% private</p>
         </div>
 
@@ -164,12 +174,12 @@
   <!-- HOW IT WORKS -->
   <section class="hiw" id="how-it-works">
     <div class="section-inner">
-      <div class="section-eyebrow">Process</div>
-      <h2 class="section-h2">From CV upload to career clarity<br><em class="gradient-text">in 30 seconds</em></h2>
-      <p class="section-sub">Three intelligent steps powered by production-grade AI</p>
+      <div class="section-eyebrow reveal">Process</div>
+      <h2 class="section-h2 reveal reveal-delay-1">From CV upload to career clarity<br><em class="gradient-text">in 30 seconds</em></h2>
+      <p class="section-sub reveal reveal-delay-2">Three intelligent steps powered by production-grade AI</p>
 
       <div class="hiw-grid">
-        <div class="hiw-card">
+        <div class="hiw-card reveal reveal-delay-1">
           <div class="hiw-num">01</div>
           <div class="hiw-icon-wrap">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
@@ -185,7 +195,7 @@
         <div class="hiw-arrow">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <div class="hiw-card">
+        <div class="hiw-card reveal reveal-delay-2">
           <div class="hiw-num">02</div>
           <div class="hiw-icon-wrap">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
@@ -199,7 +209,7 @@
         <div class="hiw-arrow">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <div class="hiw-card hiw-card-accent">
+        <div class="hiw-card hiw-card-accent reveal reveal-delay-3">
           <div class="hiw-num">03</div>
           <div class="hiw-icon-wrap">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
@@ -217,47 +227,47 @@
   <!-- FEATURES -->
   <section class="features" id="features">
     <div class="section-inner">
-      <div class="section-eyebrow">Capabilities</div>
-      <h2 class="section-h2">Everything your career advisor<br><em class="gradient-text">should be telling you</em></h2>
+      <div class="section-eyebrow reveal">Capabilities</div>
+      <h2 class="section-h2 reveal reveal-delay-1">Everything your career advisor<br><em class="gradient-text">should be telling you</em></h2>
 
       <div class="feat-grid">
-        <div class="feat-card feat-large">
+        <div class="feat-card feat-large reveal reveal-delay-1">
           <div class="feat-icon-wrap feat-icon-purple">🎯</div>
           <h3>ATS Simulation</h3>
           <p>Paste a real job description. Get a keyword match score, identify missing keywords, and receive specific tweaks to pass automated screening systems used by 99% of recruiters.</p>
           <div class="feat-badge">Most Requested</div>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-2">
           <div class="feat-icon-wrap feat-icon-amber">⚡</div>
           <h3>Skill Gap Detection</h3>
           <p>Pinpoints the exact skills separating you from your target role — not generic advice.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-3">
           <div class="feat-icon-wrap feat-icon-blue">🗺️</div>
           <h3>Career Roadmap</h3>
           <p>Concrete next steps you can take this week. No fluff, just prioritized actions.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-4">
           <div class="feat-icon-wrap feat-icon-green">💬</div>
           <h3>Interview Prep</h3>
           <p>Role-specific questions generated from your actual CV gaps. Practice before you apply.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-1">
           <div class="feat-icon-wrap feat-icon-purple">📚</div>
           <h3>Resource Curation</h3>
           <p>Targeted courses and certifications to close your specific gaps. No generic lists.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-2">
           <div class="feat-icon-wrap feat-icon-blue">🎙️</div>
           <h3>Voice Input</h3>
           <p>Describe your career goal out loud. Speech AI transcribes it instantly.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-3">
           <div class="feat-icon-wrap feat-icon-amber">📄</div>
           <h3>PDF Export</h3>
           <p>Download your full career intelligence report as a polished PDF to share or archive.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal reveal-delay-4">
           <div class="feat-icon-wrap feat-icon-green">🧠</div>
           <h3>RAG Intelligence</h3>
           <p>2025 market data, salary benchmarks, and role requirements from our knowledge base.</p>
@@ -310,28 +320,31 @@
             </div>
             <div class="fcard-status" id="status-1"></div>
           </div>
-          <div class="drop-zone" id="uploadZone">
-            <input type="file" id="cvFile" accept="image/jpeg,image/png,image/webp,application/pdf" />
-            <div class="drop-idle" id="dropIdle">
-              <div class="drop-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <line x1="12" y1="18" x2="12" y2="12"/>
-                  <line x1="9" y1="15" x2="15" y2="15"/>
-                </svg>
+          <div class="fcard-summary-line hidden" id="fcard-1-summary"></div>
+          <div class="fcard-body" id="fcard-1-body">
+            <div class="drop-zone" id="uploadZone">
+              <input type="file" id="cvFile" accept="image/jpeg,image/png,image/webp,application/pdf" />
+              <div class="drop-idle" id="dropIdle">
+                <div class="drop-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="12" y1="18" x2="12" y2="12"/>
+                    <line x1="9" y1="15" x2="15" y2="15"/>
+                  </svg>
+                </div>
+                <p class="drop-main">Drop your CV here, or <span class="drop-link">browse</span></p>
+                <p class="drop-types">PDF · JPG · PNG · WEBP</p>
               </div>
-              <p class="drop-main">Drop your CV here, or <span class="drop-link">browse</span></p>
-              <p class="drop-types">PDF · JPG · PNG · WEBP</p>
-            </div>
-            <div class="drop-done hidden" id="dropDone">
-              <div class="file-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span id="chipName">file.pdf</span>
-                <span class="chip-size" id="chipSize">0 KB</span>
-                <button class="chip-x" id="removeFile" title="Remove">✕</button>
+              <div class="drop-done hidden" id="dropDone">
+                <div class="file-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span id="chipName">file.pdf</span>
+                  <span class="chip-size" id="chipSize">0 KB</span>
+                  <button class="chip-x" id="removeFile" title="Remove">✕</button>
+                </div>
+                <span class="drop-success">✓ Ready to analyze</span>
               </div>
-              <span class="drop-success">✓ Ready to analyze</span>
             </div>
           </div>
         </div>
@@ -346,51 +359,53 @@
             </div>
             <div class="fcard-status" id="status-2"></div>
           </div>
+          <div class="fcard-summary-line hidden" id="fcard-2-summary"></div>
+          <div class="fcard-body" id="fcard-2-body">
+            <div class="vstate" id="vs-idle">
+              <button class="mic-cta" id="micBtn">
+                <span class="mic-cta-icon">🎙️</span>
+                <div class="mic-cta-text">
+                  <span class="mic-cta-main">Click to record your goal</span>
+                  <span class="mic-cta-sub">Works best in Chrome</span>
+                </div>
+              </button>
+              <p class="voice-example">"I want to become a senior data analyst at a fintech company in London"</p>
+            </div>
 
-          <div class="vstate" id="vs-idle">
-            <button class="mic-cta" id="micBtn">
-              <span class="mic-cta-icon">🎙️</span>
-              <div class="mic-cta-text">
-                <span class="mic-cta-main">Click to record your goal</span>
-                <span class="mic-cta-sub">Works best in Chrome</span>
+            <div class="vstate hidden" id="vs-recording">
+              <div class="recording-wrap">
+                <div class="rec-ring rec-ring-1"></div>
+                <div class="rec-ring rec-ring-2"></div>
+                <button class="rec-stop" id="micStop"><span class="rec-stop-icon">■</span></button>
               </div>
-            </button>
-            <p class="voice-example">"I want to become a senior data analyst at a fintech company in London"</p>
-          </div>
-
-          <div class="vstate hidden" id="vs-recording">
-            <div class="recording-wrap">
-              <div class="rec-ring rec-ring-1"></div>
-              <div class="rec-ring rec-ring-2"></div>
-              <button class="rec-stop" id="micStop"><span class="rec-stop-icon">■</span></button>
-            </div>
-            <div class="waveform" id="waveform">
-              <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-              <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-              <div class="wb"></div>
-            </div>
-            <p class="rec-status">Listening — click the button to stop</p>
-            <p class="rec-interim" id="recInterim"></p>
-          </div>
-
-          <div class="vstate hidden" id="vs-done">
-            <div class="transcript-card">
-              <div class="tc-top">
-                <span class="tc-check">✓ Recorded</span>
-                <button class="tc-redo" id="reRecordBtn">Re-record</button>
+              <div class="waveform" id="waveform">
+                <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+                <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+                <div class="wb"></div>
               </div>
-              <p class="tc-text" id="tcText"></p>
+              <p class="rec-status">Listening — click the button to stop</p>
+              <p class="rec-interim" id="recInterim"></p>
             </div>
-          </div>
 
-          <div class="vstate hidden" id="vs-unsupported">
-            <div class="unsupported-note">⚠️ Voice not supported in this browser — please type below.</div>
-          </div>
+            <div class="vstate hidden" id="vs-done">
+              <div class="transcript-card">
+                <div class="tc-top">
+                  <span class="tc-check">✓ Recorded</span>
+                  <button class="tc-redo" id="reRecordBtn">Re-record</button>
+                </div>
+                <p class="tc-text" id="tcText"></p>
+              </div>
+            </div>
 
-          <div class="goal-fallback">
-            <label class="fallback-label" for="jobGoalInput">Or type your goal</label>
-            <textarea id="jobGoalInput" class="goal-input" rows="2"
-              placeholder="e.g. I want to transition into product management at a B2B SaaS company, ideally from my current software engineering role."></textarea>
+            <div class="vstate hidden" id="vs-unsupported">
+              <div class="unsupported-note">⚠️ Voice not supported in this browser — please type below.</div>
+            </div>
+
+            <div class="goal-fallback">
+              <label class="fallback-label" for="jobGoalInput">Or type your goal</label>
+              <textarea id="jobGoalInput" class="goal-input" rows="2"
+                placeholder="e.g. I want to transition into product management at a B2B SaaS company, ideally from my current software engineering role."></textarea>
+            </div>
           </div>
         </div>
 
@@ -444,8 +459,8 @@
   <!-- LOADING OVERLAY -->
   <div class="overlay hidden" id="loadingOverlay">
     <div class="overlay-card">
-      <div class="ov-brand">🎓 CareerLens AI</div>
-      <h2 class="ov-headline">Analyzing your career profile</h2>
+      <div class="ov-brand">⚡ Kairix AI</div>
+      <h2 class="ov-headline" id="ovHeadline">Analyzing your career profile…</h2>
       <div class="ov-steps">
         <div class="ov-step" id="ovs-1"><div class="ovs-dot"></div><span>Reading your CV</span></div>
         <div class="ov-step" id="ovs-2"><div class="ovs-dot"></div><span>Scanning job market data</span></div>
@@ -575,10 +590,10 @@
   <!-- TESTIMONIALS -->
   <section class="testimonials">
     <div class="section-inner">
-      <div class="section-eyebrow">Testimonials</div>
-      <h2 class="section-h2">What career switchers<br><em class="gradient-text">are saying</em></h2>
+      <div class="section-eyebrow reveal">Testimonials</div>
+      <h2 class="section-h2 reveal reveal-delay-1">What career switchers<br><em class="gradient-text">are saying</em></h2>
       <div class="testi-grid">
-        <div class="testi-card">
+        <div class="testi-card reveal reveal-delay-1">
           <div class="testi-stars">★★★★★</div>
           <p class="testi-quote">"The ATS match feature showed me exactly why I wasn't getting callbacks. I added 8 missing keywords and landed 3 interviews the following week."</p>
           <div class="testi-author">
@@ -589,7 +604,7 @@
             </div>
           </div>
         </div>
-        <div class="testi-card">
+        <div class="testi-card reveal reveal-delay-2">
           <div class="testi-stars">★★★★★</div>
           <p class="testi-quote">"Brutally honest and genuinely helpful. It told me my CV was a 5/10 and explained exactly why. Two months later, it's an 8. Got the PM role."</p>
           <div class="testi-author">
@@ -600,7 +615,7 @@
             </div>
           </div>
         </div>
-        <div class="testi-card">
+        <div class="testi-card reveal reveal-delay-3">
           <div class="testi-stars">★★★★★</div>
           <p class="testi-quote">"The interview questions were specific to my actual CV gaps. I prepared for every single one. Walked out knowing I'd nailed it."</p>
           <div class="testi-author">
@@ -624,7 +639,7 @@
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="brand-name">CareerLens<span class="brand-ai">AI</span></span>
+        <span class="brand-name">Kairix<span class="brand-ai">AI</span></span>
       </div>
       <span class="ft-copy">Powered by Llama 3.3 70B · Google Cloud Vision · ChromaDB RAG · n8n Automation</span>
       <span class="ft-right">AI Portfolio 2 · 2025</span>
@@ -632,6 +647,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

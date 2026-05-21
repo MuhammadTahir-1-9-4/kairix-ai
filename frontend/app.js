@@ -5,6 +5,7 @@ let currentFeedback = null;
 let recognition     = null;
 let isRecording     = false;
 let loadingTimers   = [];
+let loadingMsgInterval = null;
 
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:8000'
@@ -40,6 +41,7 @@ const errClose      = document.getElementById('errClose');
 
 const loadingOverlay = document.getElementById('loadingOverlay');
 const ovBar         = document.getElementById('ovBar');
+const ovHeadline    = document.getElementById('ovHeadline');
 
 const resultsEl     = document.getElementById('results');
 const scoreRingFill = document.getElementById('scoreRingFill');
@@ -60,7 +62,7 @@ const copyBtn    = document.getElementById('copyBtn');
 const downloadBtn = document.getElementById('downloadBtn');
 const resetBtn   = document.getElementById('resetBtn');
 
-/* ─── STEPPER (4 steps) ─── */
+/* ─── STEPPER ─── */
 function setStep(n) {
   [1, 2, 3, 4].forEach(i => {
     const el = document.getElementById(`si-${i}`);
@@ -72,6 +74,36 @@ function setStep(n) {
     t.classList.toggle('done', i + 1 < n);
   });
 }
+
+/* ─── STEP COLLAPSE / EXPAND ─── */
+function collapseFcard(n, summaryText) {
+  const card    = document.getElementById(`fcard-${n}`);
+  const summary = document.getElementById(`fcard-${n}-summary`);
+  if (!card) return;
+  card.classList.add('collapsed');
+  if (summary) {
+    summary.textContent = summaryText;
+    summary.classList.remove('hidden');
+  }
+}
+
+function expandFcard(n) {
+  const card    = document.getElementById(`fcard-${n}`);
+  const summary = document.getElementById(`fcard-${n}-summary`);
+  if (!card) return;
+  card.classList.remove('collapsed');
+  if (summary) summary.classList.add('hidden');
+}
+
+// Click-to-expand on collapsed cards
+document.querySelectorAll('.fcard').forEach(card => {
+  card.addEventListener('click', () => {
+    if (card.classList.contains('collapsed')) {
+      const n = card.id.replace('fcard-', '');
+      expandFcard(n);
+    }
+  });
+});
 
 /* ─── FILE UPLOAD ─── */
 cvFileInput.addEventListener('change', e => handleFileSelect(e.target.files[0]));
@@ -106,6 +138,16 @@ function handleFileSelect(file) {
   document.getElementById('status-1').className = 'fcard-status done';
   if (jobGoalText) setStep(4); else setStep(2);
   updateCTA();
+
+  // Collapse step 1 and scroll to step 2
+  setTimeout(() => {
+    collapseFcard(1, `📄 ${file.name}  ·  ${fmtBytes(file.size)}`);
+    if (!jobGoalText) {
+      setTimeout(() => {
+        document.getElementById('fcard-2').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 200);
+    }
+  }, 300);
 }
 
 function clearFile() {
@@ -115,6 +157,7 @@ function clearFile() {
   dropDone.classList.add('hidden');
   document.getElementById('status-1').textContent = '';
   document.getElementById('status-1').className = 'fcard-status';
+  expandFcard(1);
   setStep(1);
   updateCTA();
 }
@@ -189,6 +232,7 @@ if (!SpeechRecognition) {
   reRecordBtn.addEventListener('click', () => {
     jobGoalText = '';
     jobGoalInput.value = '';
+    expandFcard(2);
     setVoiceState('idle');
     document.getElementById('status-2').textContent = '';
     document.getElementById('status-2').className = 'fcard-status';
@@ -217,6 +261,12 @@ function updateGoalDone() {
   document.getElementById('status-2').className = 'fcard-status done';
   if (selectedFile) setStep(4); else setStep(3);
   updateCTA();
+
+  // Collapse step 2 after a short delay
+  setTimeout(() => {
+    const preview = jobGoalText.length > 72 ? jobGoalText.substring(0, 72) + '…' : jobGoalText;
+    collapseFcard(2, `🎯 ${preview}`);
+  }, 400);
 }
 
 /* ─── JD INPUT ─── */
@@ -249,6 +299,17 @@ errClose.addEventListener('click', hideError);
 function showError(msg) { errText.textContent = msg; errBanner.classList.remove('hidden'); }
 function hideError() { errBanner.classList.add('hidden'); }
 
+/* ─── CYCLING AI LOADING MESSAGES ─── */
+const AI_MESSAGES = [
+  'Analyzing your career profile…',
+  'Extracting your CV details…',
+  'Cross-referencing 2025 market data…',
+  'Identifying skill gaps…',
+  'Calculating ATS keyword match…',
+  'Writing your personalized coaching…',
+  'Finalizing career roadmap…',
+];
+
 /* ─── LOADING OVERLAY ─── */
 function showLoading() {
   loadingOverlay.classList.remove('hidden');
@@ -257,8 +318,26 @@ function showLoading() {
   });
   ovBar.style.width = '0%';
 
+  // Reset headline
+  if (ovHeadline) ovHeadline.textContent = AI_MESSAGES[0];
+
   document.getElementById('ovs-1').classList.add('active');
   requestAnimationFrame(() => { ovBar.style.width = '20%'; });
+
+  // Cycle headline messages
+  let msgIdx = 0;
+  loadingMsgInterval = setInterval(() => {
+    msgIdx = (msgIdx + 1) % AI_MESSAGES.length;
+    if (ovHeadline) {
+      ovHeadline.style.opacity = '0';
+      setTimeout(() => {
+        if (ovHeadline) {
+          ovHeadline.textContent = AI_MESSAGES[msgIdx];
+          ovHeadline.style.opacity = '1';
+        }
+      }, 200);
+    }
+  }, 2200);
 
   const t1 = setTimeout(() => {
     document.getElementById('ovs-1').classList.replace('active','done');
@@ -276,6 +355,10 @@ function showLoading() {
 function hideLoading() {
   loadingTimers.forEach(clearTimeout);
   loadingTimers = [];
+  if (loadingMsgInterval) {
+    clearInterval(loadingMsgInterval);
+    loadingMsgInterval = null;
+  }
   ovBar.style.width = '100%';
   setTimeout(() => { loadingOverlay.classList.add('hidden'); }, 350);
 }
@@ -328,6 +411,59 @@ function setCtaLoading(on) {
     updateCTA();
   }
 }
+
+/* ─── SAMPLE REPORT ─── */
+const SAMPLE_FEEDBACK = {
+  overall_score: 7,
+  score_explanation: 'Strong technical foundation in software engineering, but the CV lacks PM-specific evidence such as metrics-driven product decisions and stakeholder management examples. The transition narrative is unclear to a recruiter who receives 300+ CVs per role.',
+  strengths: [
+    'Solid engineering background demonstrates technical credibility with product teams',
+    'Led a cross-functional project delivering a 40% reduction in API latency',
+    'Computer Science degree provides strong analytical and systems-thinking foundation',
+    'Contributed to agile ceremonies — sprint planning, retrospectives, backlog grooming',
+    'Side project shows initiative: built a habit-tracking app with 200+ active users',
+  ],
+  skill_gaps: [
+    'No evidence of defining product vision, OKRs, or product strategy',
+    'Missing user research or discovery work — interviews, surveys, usability testing',
+    'No A/B testing or data-driven feature decision examples',
+    'Stakeholder management and executive communication not demonstrated',
+    'No product metrics or KPIs tracked or owned on current CV',
+  ],
+  cv_improvements: [
+    'Add a professional summary: "Software Engineer transitioning to PM — 4 years of technical leadership and user-facing product delivery"',
+    'Reframe engineering bullet points to highlight user impact, not implementation details',
+    'Create a "Product Work" section: document your side project with metrics (MAU, retention, NPS)',
+    'Quantify every bullet: "Improved API performance" → "Reduced p95 latency from 800ms to 120ms, improving checkout conversion by 8%"',
+    'Add a Skills section: Product Thinking · Agile/Scrum · JIRA · Figma (basic) · SQL · A/B Testing',
+  ],
+  next_steps: [
+    'Enroll in the Google Project Management Certificate on Coursera this week (6 hours) — it gives you PM vocabulary for interviews',
+    'Document your habit app as a case study: problem → research → decisions → metrics. Add it to a personal site or Notion',
+    'Apply to 3 APM or Associate PM roles at companies with internal mobility programs where your engineering background is valued',
+  ],
+  interview_questions: [
+    'Tell me about a time you had to say no to a feature request. How did you handle it?',
+    'Walk me through how you would prioritize a backlog with 40 items and limited engineering capacity.',
+    'How would you measure the success of a new onboarding flow?',
+  ],
+  recommended_resources: [
+    'Coursera — Google Project Management Certificate: structured PM fundamentals that close your process and vocabulary gaps',
+    'LinkedIn Learning — Become a Product Manager: covers roadmapping, stakeholder management, and metrics',
+    'Udemy — Become a Product Manager by Cole Mercer: practitioner-taught, closes the gap between engineering and product thinking',
+    'YouTube — Lenny Rachitsky channel: real interviews with PMs at top companies on strategy and prioritization',
+    'Official JIRA documentation — free, closes your tool knowledge gap immediately and adds a credible CV line',
+  ],
+  motivational_message: 'Your engineering depth is a genuine superpower in product — companies like Stripe, Notion, and Linear actively seek engineers who can lead products. This report shows you exactly what to bridge.',
+};
+
+document.getElementById('sampleReportBtn')?.addEventListener('click', () => {
+  currentFeedback = SAMPLE_FEEDBACK;
+  renderResults(SAMPLE_FEEDBACK);
+  setTimeout(() => {
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+});
 
 /* ─── RENDER RESULTS ─── */
 const SCORE_MAP = [
@@ -505,8 +641,8 @@ copyBtn.addEventListener('click', async () => {
   if (!currentFeedback) return;
   const f = currentFeedback;
   const txt = [
-    'CareerLens AI — Career Intelligence Report',
-    '===========================================',
+    'Kairix AI — Career Intelligence Report',
+    '========================================',
     '',
     `Overall Score: ${f.overall_score}/10`,
     f.score_explanation || '',
@@ -589,7 +725,7 @@ downloadBtn.addEventListener('click', () => {
   doc.rect(0, 0, W, 70, 'F');
   doc.setFontSize(18); doc.setFont('helvetica', 'bold');
   doc.setTextColor(255, 255, 255);
-  doc.text('CareerLens AI — Career Intelligence Report', margin, 30);
+  doc.text('Kairix AI — Career Intelligence Report', margin, 30);
   doc.setFontSize(10); doc.setFont('helvetica', 'normal');
   doc.setTextColor(139, 154, 181);
   doc.text(`Score: ${f.overall_score}/10  |  Goal: ${(f.job_goal || '').substring(0, 60)}`, margin, 50);
@@ -624,7 +760,7 @@ downloadBtn.addEventListener('click', () => {
     addListItems(f.jd_match.jd_advice);
   }
 
-  doc.save('careerlens-report.pdf');
+  doc.save('kairix-career-report.pdf');
 });
 
 /* ─── RESET ─── */
@@ -650,6 +786,9 @@ function resetApp() {
   jdInput.value = '';
   userEmailInput.value = '';
 
+  expandFcard(1);
+  expandFcard(2);
+
   hideError();
   resultsEl.classList.add('hidden');
   jdMatchSection.classList.add('hidden');
@@ -665,11 +804,153 @@ function resetApp() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+/* ─── HERO CANVAS PARTICLE ANIMATION ─── */
+function initHeroCanvas() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, particles = [];
+  const mouse = { x: -999, y: -999 };
+  const MAX_P = 55, LINK_DIST = 130, MOUSE_DIST = 160;
+
+  function resize() {
+    const hero = canvas.parentElement;
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+
+  function mkParticle() {
+    return {
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r:  Math.random() * 1.4 + 0.4,
+      op: Math.random() * 0.45 + 0.15,
+    };
+  }
+
+  resize();
+  for (let i = 0; i < MAX_P; i++) particles.push(mkParticle());
+
+  window.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const lx = e.clientX - rect.left;
+    const ly = e.clientY - rect.top;
+    mouse.x = (lx >= 0 && lx <= W && ly >= 0 && ly <= H) ? lx : -999;
+    mouse.y = (lx >= 0 && lx <= W && ly >= 0 && ly <= H) ? ly : -999;
+  });
+
+  let raf;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(99,102,241,${p.op})`;
+      ctx.fill();
+    });
+
+    // Particle-to-particle links
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(99,102,241,${(1 - d / LINK_DIST) * 0.14})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      // Mouse proximity links
+      const mx = particles[i].x - mouse.x;
+      const my = particles[i].y - mouse.y;
+      const md = Math.sqrt(mx * mx + my * my);
+      if (md < MOUSE_DIST) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(168,85,247,${(1 - md / MOUSE_DIST) * 0.3})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  draw();
+  window.addEventListener('resize', () => {
+    resize();
+    particles = [];
+    for (let i = 0; i < MAX_P; i++) particles.push(mkParticle());
+  });
+}
+
+/* ─── CURSOR GLOW ─── */
+function initCursorGlow() {
+  const glow = document.getElementById('cursorGlow');
+  if (!glow) return;
+
+  let cx = -300, cy = -300, tx = -300, ty = -300;
+
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+
+  function animate() {
+    cx += (tx - cx) * 0.09;
+    cy += (ty - cy) * 0.09;
+    glow.style.transform = `translate(${cx - 200}px, ${cy - 200}px)`;
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+/* ─── SCROLL REVEAL ─── */
+function initScrollReveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length || !('IntersectionObserver' in window)) {
+    // Fallback: make all visible immediately
+    els.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  els.forEach(el => observer.observe(el));
+}
+
 /* ─── BOOT ─── */
 setStep(1);
 setVoiceState('idle');
 updateCTA();
+
 if (window.speechSynthesis) {
   window.speechSynthesis.getVoices();
   window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReducedMotion) {
+  initHeroCanvas();
+  initCursorGlow();
+}
+initScrollReveal();
