@@ -247,7 +247,10 @@ jobGoalInput.addEventListener('input', () => {
   if (jobGoalText) {
     tcText.textContent = jobGoalText;
     setVoiceState('done');
-    updateGoalDone();
+    // Update status/step without collapsing — user is still typing
+    document.getElementById('status-2').textContent = '✓';
+    document.getElementById('status-2').className = 'fcard-status done';
+    if (selectedFile) setStep(4); else setStep(3);
   } else {
     setVoiceState('idle');
     document.getElementById('status-2').textContent = '';
@@ -256,17 +259,27 @@ jobGoalInput.addEventListener('input', () => {
   updateCTA();
 });
 
+// Collapse fcard-2 only when the user leaves the textarea
+jobGoalInput.addEventListener('blur', () => {
+  if (jobGoalText) {
+    const preview = jobGoalText.length > 72 ? jobGoalText.substring(0, 72) + '…' : jobGoalText;
+    collapseFcard(2, `🎯 ${preview}`);
+  }
+});
+
 function updateGoalDone() {
   document.getElementById('status-2').textContent = '✓';
   document.getElementById('status-2').className = 'fcard-status done';
   if (selectedFile) setStep(4); else setStep(3);
   updateCTA();
 
-  // Collapse step 2 after a short delay
-  setTimeout(() => {
-    const preview = jobGoalText.length > 72 ? jobGoalText.substring(0, 72) + '…' : jobGoalText;
-    collapseFcard(2, `🎯 ${preview}`);
-  }, 400);
+  // Collapse only for voice input (user is not inside the textarea)
+  if (document.activeElement !== jobGoalInput) {
+    setTimeout(() => {
+      const preview = jobGoalText.length > 72 ? jobGoalText.substring(0, 72) + '…' : jobGoalText;
+      collapseFcard(2, `🎯 ${preview}`);
+    }, 400);
+  }
 }
 
 /* ─── JD INPUT ─── */
