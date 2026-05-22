@@ -1,90 +1,133 @@
-# CareerLens AI 🎓
+# Kairix AI
 
-**An AI-powered career coaching system** — upload your CV, speak your dream job, and receive instant AI-driven career feedback.
+**AI-powered career coaching** — upload your CV, speak your target role, and receive instant, personalized career feedback powered by LLM + RAG.
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=flat&logo=fastapi&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-llama--3.3--70b-F55036?style=flat)
+![ChromaDB](https://img.shields.io/badge/ChromaDB-RAG-00A36C?style=flat)
+![Netlify](https://img.shields.io/badge/Frontend-Netlify-00C7B7?style=flat&logo=netlify&logoColor=white)
+![Railway](https://img.shields.io/badge/Backend-Railway-0B0D0E?style=flat&logo=railway&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat)
+
+---
+
+## Overview
+
+Kairix AI (from *Kairos* — the Greek concept of the perfect moment) helps job seekers understand exactly where they stand and what to do next. Users upload a CV (JPG, PNG, PDF, or DOCX), speak or type their target role, and receive a scored breakdown of strengths, skill gaps, recommended improvements, and actionable next steps — all in under 10 seconds.
+
+**Live demo:** [kairix.netlify.app](https://kairix.netlify.app) &nbsp;|&nbsp; **API:** Deployed on Railway
 
 ---
 
 ## Architecture
 
 ```
-                        ┌─────────────────────────────────────────────┐
-                        │              USER / BROWSER                  │
-                        │  (index.html + app.js + style.css)           │
-                        │                                               │
-                        │  1. Upload CV image                          │
-                        │  2. Speak job goal → Web Speech API          │
-                        │  3. Click "Analyze My Career"                │
-                        │  4. Hear feedback → Web Speech Synthesis     │
-                        └────────────────────┬────────────────────────┘
-                                             │ POST /analyze
-                                             ▼
-                        ┌─────────────────────────────────────────────┐
-                        │         FastAPI BACKEND (port 8000)          │
-                        │                                               │
-                        │  ┌──────────────┐  ┌──────────────────────┐ │
-                        │  │  vision.py   │  │       rag.py          │ │
-                        │  │ Google Vision│  │ LangChain + ChromaDB  │ │
-                        │  │  (OCR CV)    │  │ (job market context)  │ │
-                        │  └──────┬───────┘  └──────────┬───────────┘ │
-                        │         │                       │             │
-                        │         └───────────┬───────────┘             │
-                        │                     ▼                         │
-                        │           ┌──────────────────┐               │
-                        │           │   ai_coach.py     │               │
-                        │           │  Claude API        │               │
-                        │           │  (Feedback JSON)   │               │
-                        │           └────────┬─────────┘               │
-                        │                    │                          │
-                        │           ┌────────▼─────────┐               │
-                        │           │  automation.py    │               │
-                        │           │  n8n Webhook      │               │
-                        │           └────────┬─────────┘               │
-                        └────────────────────┼────────────────────────┘
-                                             │
-                          ┌──────────────────┼──────────────────┐
-                          ▼                                       ▼
-                 ┌─────────────────┐                  ┌──────────────────┐
-                 │   Gmail / Email  │                  │  Google Sheets   │
-                 │  (report sent)   │                  │  (session log)   │
-                 └─────────────────┘                  └──────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                  BROWSER (Frontend)                   │
+│          index.html · app.js · style.css              │
+│                                                       │
+│  1. Upload CV (JPG / PNG / PDF / DOCX)               │
+│  2. Speak job goal → Web Speech API                  │
+│  3. Click "Analyze My Career"                        │
+│  4. Hear feedback → Web Speech Synthesis             │
+└────────────────────────┬─────────────────────────────┘
+                         │  POST /analyze
+                         ▼
+┌──────────────────────────────────────────────────────┐
+│              FastAPI BACKEND (Railway)                │
+│                                                       │
+│  ┌─────────────────┐   ┌────────────────────────┐   │
+│  │   vision.py      │   │        rag.py           │   │
+│  │  Google Vision   │   │  LangChain + ChromaDB   │   │
+│  │  pdfplumber      │   │  all-MiniLM-L6-v2       │   │
+│  │  python-docx     │   │  (job market context)   │   │
+│  └────────┬─────────┘   └──────────┬─────────────┘   │
+│           │                        │                  │
+│           └────────────┬───────────┘                  │
+│                        ▼                              │
+│              ┌──────────────────┐                    │
+│              │   ai_coach.py    │                    │
+│              │  Groq API        │                    │
+│              │  llama-3.3-70b   │                    │
+│              │  (Feedback JSON) │                    │
+│              └────────┬─────────┘                    │
+│                       │                              │
+│              ┌────────▼─────────┐                   │
+│              │  automation.py   │                   │
+│              │  n8n Webhook     │                   │
+│              └────────┬─────────┘                   │
+└───────────────────────┼──────────────────────────────┘
+                        │
+          ┌─────────────┴──────────────┐
+          ▼                            ▼
+ ┌─────────────────┐        ┌──────────────────┐
+ │  Gmail (SMTP)   │        │  Google Sheets   │
+ │  (report email) │        │  (session log)   │
+ └─────────────────┘        └──────────────────┘
 ```
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | HTML5, CSS3, Vanilla JavaScript |
+| Voice Input | Web Speech API (SpeechRecognition) |
+| Text-to-Speech | Web Speech Synthesis API |
+| Backend | FastAPI (Python 3.10+) |
+| CV OCR | Google Cloud Vision API (images) |
+| PDF Extraction | pdfplumber |
+| DOCX Extraction | python-docx |
+| Embeddings | Sentence Transformers — all-MiniLM-L6-v2 |
+| Vector Store | ChromaDB |
+| RAG Framework | LangChain |
+| AI Model | Groq — llama-3.3-70b-versatile |
+| Automation | n8n → Gmail SMTP + Google Sheets |
+| Frontend Hosting | Netlify |
+| Backend Hosting | Railway (nixpacks) |
 
 ---
 
 ## Prerequisites
 
-- **Python 3.10+**
-- **Google Cloud Vision API key** (free tier: 1,000 requests/month)
-- **Anthropic API key** (Claude claude-sonnet-4-20250514)
-- **n8n** (optional — for email + Google Sheets automation)
+- Python 3.10+
+- Google Cloud Vision API key (free tier: 1,000 requests/month)
+- Groq API key (free tier available at [console.groq.com](https://console.groq.com))
+- n8n (optional — for email + Google Sheets automation)
 
 ---
 
-## Setup Instructions
+## Local Setup
 
-### 1. Clone or download the project
+### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd career-lens-ai
+git clone https://github.com/MuhammadTahir-1-9-4/careerlens-ai.git
+cd careerlens-ai
 ```
 
-### 2. Install Python dependencies
+### 2. Create and activate a virtual environment
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# macOS / Linux
+source venv/bin/activate
+```
+
+### 3. Install Python dependencies
 
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-> **Tip:** Use a virtual environment:
-> ```bash
-> python -m venv venv
-> venv\Scripts\activate   # Windows
-> source venv/bin/activate # Mac/Linux
-> pip install -r requirements.txt
-> ```
-
-### 3. Configure environment variables
+### 4. Configure environment variables
 
 ```bash
 cp .env.example .env
@@ -92,14 +135,16 @@ cp .env.example .env
 
 Open `.env` and fill in your keys:
 
-```
-GOOGLE_CLOUD_VISION_API_KEY=your_key_here
-ANTHROPIC_API_KEY=your_key_here
-N8N_WEBHOOK_URL=your_n8n_webhook_url_here   # leave blank if not using n8n
+```env
+GOOGLE_CLOUD_VISION_API_KEY=your_google_vision_key
+GROQ_API_KEY=your_groq_api_key
+N8N_WEBHOOK_URL=your_n8n_webhook_url     # leave blank to skip automation
 CHROMA_PERSIST_DIR=./chroma_db
 ```
 
-### 4. Load the knowledge base into ChromaDB
+### 5. Load the knowledge base
+
+Run this once to embed job market data into ChromaDB:
 
 ```bash
 python knowledge_base/load_data.py
@@ -112,178 +157,168 @@ Split into 42 chunks. Embedding now...
 Done! 42 chunks stored in ChromaDB at: .../chroma_db
 ```
 
-### 5. Start the backend server
+### 6. Start the backend server
 
 ```bash
 uvicorn main:app --reload --port 8000
 ```
 
-The API will be available at `http://localhost:8000`
-
 Verify it's running:
+
 ```bash
 curl http://localhost:8000/
-# {"status":"CareerLens AI is running","version":"1.0.0"}
+# {"status":"Kairix AI is running","version":"1.0.0"}
 
 curl http://localhost:8000/health
 # {"chroma_ready":true,"document_count":42}
 ```
 
-### 6. Open the frontend
+### 7. Open the frontend
 
-Option A — Open directly in browser:
+**Option A** — Open directly:
 ```
 frontend/index.html
 ```
 Double-click the file in Explorer or Finder.
 
-Option B — Serve with Python (avoids some browser restrictions):
+**Option B** — Serve with Python (avoids browser file restrictions):
 ```bash
 cd frontend
 python -m http.server 3000
+# Open http://localhost:3000
 ```
-Then open `http://localhost:3000` in your browser.
 
-> **Note:** Chrome and Edge support Web Speech API. Firefox has limited support. For best results, use **Google Chrome**.
+> **Browser compatibility:** Web Speech API requires **Google Chrome** or **Microsoft Edge**. Firefox has limited support.
 
 ---
 
-## How to Get Your API Keys
+## How to Get API Keys
 
-### Google Cloud Vision API Key
+### Google Cloud Vision API
 
 1. Go to [console.cloud.google.com](https://console.cloud.google.com)
-2. Click **Select a project** → **New Project** → name it "CareerLens" → **Create**
-3. In the search bar, type **"Cloud Vision API"** → click it → click **Enable**
-4. Go to **APIs & Services** → **Credentials**
-5. Click **+ Create Credentials** → **API Key**
-6. Copy the generated key
-7. (Optional but recommended) Click **Restrict Key** → restrict to **Cloud Vision API**
-8. Paste the key into your `.env` file as `GOOGLE_CLOUD_VISION_API_KEY`
+2. Create a new project
+3. Search for **Cloud Vision API** → click **Enable**
+4. Go to **APIs & Services** → **Credentials** → **+ Create Credentials** → **API Key**
+5. (Recommended) Restrict the key to Cloud Vision API only
+6. Copy and paste into `.env` as `GOOGLE_CLOUD_VISION_API_KEY`
 
-**Free tier:** 1,000 units/month — sufficient for testing and portfolio demos.
+Free tier: **1,000 units/month** — sufficient for development and portfolio demos.
 
-### Anthropic API Key
+### Groq API
 
-1. Go to [console.anthropic.com](https://console.anthropic.com)
+1. Go to [console.groq.com](https://console.groq.com)
 2. Sign up or log in
-3. Go to **API Keys** → **Create Key**
-4. Copy the key and paste it into `.env` as `ANTHROPIC_API_KEY`
+3. Navigate to **API Keys** → **Create API Key**
+4. Copy and paste into `.env` as `GROQ_API_KEY`
+
+Free tier: generous rate limits — no credit card required.
 
 ---
 
-## n8n Automation Setup (Optional)
+## n8n Automation (Optional)
 
-n8n automates sending the coaching report to the user's email and logging each session to Google Sheets.
+Automates emailing the coaching report to the user and logging each session to Google Sheets.
 
 ### Install n8n
 
 ```bash
 npm install -g n8n
 n8n start
+# Open http://localhost:5678
 ```
-
-Open `http://localhost:5678` in your browser.
 
 ### Build the Workflow
 
-1. **Create a new workflow** in n8n
+1. **Create a new workflow**
 2. **Add a Webhook node:**
-   - Method: POST
-   - Path: `career-lens`
-   - Click **Listen for Test Event** to get the webhook URL
-   - Copy the URL and paste it into `.env` as `N8N_WEBHOOK_URL`
-
-3. **Add a Gmail node** (or SMTP):
-   - Connect after Webhook
-   - To: `{{ $json.email }}`
-   - Subject: `Your CareerLens AI Report — Score: {{ $json.overall_score }}/10`
-   - Body: Build a formatted HTML email using the fields:
-     - `{{ $json.overall_score }}`
-     - `{{ $json.strengths.join(', ') }}`
-     - `{{ $json.skill_gaps.join(', ') }}`
-     - `{{ $json.next_steps.join(', ') }}`
-     - `{{ $json.motivational_message }}`
-
+   - Method: `POST`
+   - Path: `kairix`
+   - Click **Listen for Test Event** → copy the URL → paste into `.env` as `N8N_WEBHOOK_URL`
+3. **Add a Gmail node:**
+   - To: `{{ $json.body.email }}`
+   - Subject: `Your Kairix AI Report — Score: {{ $json.body.overall_score }}/10`
+   - Body: use `$json.body.strengths`, `$json.body.skill_gaps`, `$json.body.next_steps`, etc.
 4. **Add a Google Sheets node:**
-   - Connect after Gmail
    - Operation: Append Row
-   - Columns: `timestamp`, `email`, `job_goal`, `overall_score`, `strengths`, `skill_gaps`
-
-5. **Activate the workflow** using the toggle in the top-right corner
+   - Columns: `timestamp`, `email`, `job_goal`, `overall_score`
+5. **Activate the workflow** with the toggle in the top-right corner
 
 ---
 
-## How to Use CareerLens AI
+## How to Use Kairix AI
 
-1. **Upload your CV** — take a photo or scan and drag it into the upload zone
-2. **Record your goal** — click the microphone button and say something like:
-   *"I want to become a data analyst at a fintech company in London"*
-3. **Add your email** (optional) to receive the report by email
-4. **Click "Analyze My Career"** — the AI will:
-   - Extract text from your CV using Google Vision
-   - Retrieve relevant job market data from the knowledge base
-   - Ask Claude to score your CV and generate detailed coaching
-5. **Review your results** — score ring, strengths, skill gaps, improvements, next steps
-6. **Click "Hear Your Feedback"** to have the results read aloud
+1. **Upload your CV** — drag and drop a JPG, PNG, PDF, or DOCX file (max 10 MB)
+2. **Record your goal** — click the microphone and say your target role, e.g.:
+   > *"I want to become a data analyst at a fintech company in London"*
+3. **Add your email** (optional) to receive the full report by email
+4. **Click "Analyze My Career"** — Kairix will:
+   - Extract text from your CV using Google Vision / pdfplumber / python-docx
+   - Retrieve relevant job market context from ChromaDB via RAG
+   - Send everything to Groq llama-3.3-70b for scored, structured feedback
+5. **Review your results** — score ring, strengths, skill gaps, CV improvements, next steps
+6. **Click "Hear Your Feedback"** to listen to the full report via text-to-speech
+7. **Download PDF** — export the full coaching report as a styled PDF
 
 ---
 
 ## Project Structure
 
 ```
-career-lens-ai/
+kairix-ai/
 ├── backend/
-│   ├── main.py                  # FastAPI app — API endpoints
-│   ├── vision.py                # Google Cloud Vision OCR
+│   ├── main.py                  # FastAPI app — routing and request handling
+│   ├── vision.py                # OCR: Google Vision, pdfplumber, python-docx
 │   ├── rag.py                   # LangChain + ChromaDB retrieval
-│   ├── ai_coach.py              # Claude API feedback generation
+│   ├── ai_coach.py              # Groq LLM feedback generation
 │   ├── automation.py            # n8n webhook trigger
 │   ├── requirements.txt
 │   ├── .env.example
 │   └── knowledge_base/
-│       ├── load_data.py         # One-time setup script
+│       ├── load_data.py         # One-time ChromaDB setup script
 │       └── jobs_data.txt        # Job market knowledge base
 ├── frontend/
-│   ├── index.html
-│   ├── app.js
-│   └── style.css
+│   ├── index.html               # App shell and markup
+│   ├── app.js                   # All UI logic, API calls, PDF export
+│   └── style.css                # Design system and animations
+├── railway.toml                 # Railway deployment config
+├── start.sh                     # Railway startup script
 └── README.md
 ```
 
 ---
 
-## API Endpoints
+## API Reference
 
-| Method | Endpoint    | Description                                      |
-|--------|-------------|--------------------------------------------------|
-| GET    | `/`         | Health check — confirms server is running        |
-| GET    | `/health`   | ChromaDB status and document count               |
-| POST   | `/analyze`  | Main endpoint — accepts CV image + job goal      |
+| Method | Endpoint   | Description                                 |
+|--------|------------|---------------------------------------------|
+| GET    | `/`        | Health check                                |
+| GET    | `/health`  | ChromaDB status and document count          |
+| POST   | `/analyze` | Analyze CV — accepts image, PDF, or DOCX   |
 
-### POST /analyze — Request
+### POST `/analyze` — Request
 
 ```
 Content-Type: multipart/form-data
 
-cv_image   : File   (required) — CV image (JPG, PNG, WEBP) or PDF
-job_goal   : string (required) — User's target job description
-user_email : string (optional) — Email for automation
+cv_image   : File   (required) — CV file: JPG, PNG, WEBP, PDF, or DOCX
+job_goal   : string (required) — Target role description
+user_email : string (optional) — Email address for report delivery
 ```
 
-### POST /analyze — Response
+### POST `/analyze` — Response
 
 ```json
 {
-  "cv_text": "Extracted text from CV...",
+  "cv_text": "Extracted CV text...",
   "job_goal": "I want to be a data analyst...",
   "overall_score": 7,
-  "score_explanation": "Your CV shows solid experience...",
-  "strengths": ["Strong SQL skills", "..."],
-  "skill_gaps": ["No Tableau experience", "..."],
-  "cv_improvements": ["Add a professional summary", "..."],
-  "next_steps": ["Complete Google Data Analytics cert", "..."],
-  "motivational_message": "You're already closer than you think!"
+  "score_explanation": "Your CV demonstrates solid technical foundations...",
+  "strengths": ["Strong SQL skills", "Relevant project experience"],
+  "skill_gaps": ["No Tableau experience", "Missing certifications"],
+  "cv_improvements": ["Add a professional summary", "Quantify achievements"],
+  "next_steps": ["Complete Google Data Analytics cert", "Build a portfolio project"],
+  "motivational_message": "You're closer than you think — one focused month can close these gaps."
 }
 ```
 
@@ -293,26 +328,16 @@ user_email : string (optional) — Email for automation
 
 | Problem | Solution |
 |---|---|
-| `GOOGLE_CLOUD_VISION_API_KEY not set` | Check your `.env` file exists and has the correct key |
-| `Could not extract text from image` | Upload a clearer, higher-resolution photo of your CV |
-| `ChromaDB not ready` | Run `python knowledge_base/load_data.py` first |
-| `Cannot connect to backend` | Make sure `uvicorn main:app --reload --port 8000` is running |
-| Voice recording not working | Use Google Chrome or Microsoft Edge; grant microphone permissions |
-| n8n webhook not triggering | Check `N8N_WEBHOOK_URL` is set and n8n workflow is activated |
+| `GOOGLE_CLOUD_VISION_API_KEY not set` | Ensure `.env` exists in `backend/` and contains the correct key |
+| `Could not extract text from image` | Upload a higher-resolution photo; avoid glare or shadows |
+| `Could not extract text from PDF` | PDF must contain selectable text, not a scanned image — use JPG/PNG for scanned CVs |
+| `ChromaDB not ready` | Run `python knowledge_base/load_data.py` before starting the server |
+| `Cannot connect to backend` | Confirm `uvicorn main:app --reload --port 8000` is running |
+| Voice recording not working | Use Google Chrome or Edge; grant microphone permission when prompted |
+| n8n webhook not triggering | Verify `N8N_WEBHOOK_URL` is correct and the n8n workflow is activated |
 
 ---
 
-## Tech Stack
+## License
 
-| Layer | Technology |
-|---|---|
-| Frontend | HTML5, CSS3, Vanilla JavaScript |
-| Voice Input | Web Speech API (SpeechRecognition) |
-| Text-to-Speech | Web Speech Synthesis API |
-| Backend | FastAPI (Python) |
-| CV OCR | Google Cloud Vision API |
-| Embeddings | Sentence Transformers (all-MiniLM-L6-v2) |
-| Vector Store | ChromaDB |
-| RAG Framework | LangChain |
-| AI Model | Anthropic Claude (claude-sonnet-4-20250514) |
-| Automation | n8n (webhooks → Gmail + Google Sheets) |
+MIT — free to use, fork, and build on.
