@@ -124,8 +124,16 @@ removeFile.addEventListener('click', e => {
 
 function handleFileSelect(file) {
   if (!file) return;
-  const allowed = ['image/jpeg','image/png','image/webp','application/pdf'];
-  if (!allowed.includes(file.type)) { showError('Invalid file type. Please upload a JPG, PNG, WEBP, or PDF.'); return; }
+  const allowedTypes = [
+    'image/jpeg', 'image/png', 'image/webp', 'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  ];
+  const allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'docx'];
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!allowedTypes.includes(file.type) && !allowedExts.includes(ext)) {
+    showError('Invalid file type. Please upload a JPG, PNG, WEBP, PDF, or DOCX.');
+    return;
+  }
   if (file.size > 10 * 1024 * 1024) { showError('File too large. Maximum size is 10 MB.'); return; }
 
   hideError();

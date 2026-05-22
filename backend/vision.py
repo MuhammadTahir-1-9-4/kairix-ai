@@ -19,6 +19,39 @@ def _is_pdf(image_bytes: bytes) -> bool:
     return image_bytes[:4] == b"%PDF"
 
 
+def _is_docx(image_bytes: bytes) -> bool:
+    # DOCX files are ZIP archives and start with the PK signature
+    return image_bytes[:4] == b"PK\x03\x04"
+
+
+def _extract_text_from_docx(image_bytes: bytes) -> str:
+    from docx import Document
+
+    doc = Document(io.BytesIO(image_bytes))
+
+    text_parts = []
+
+    for para in doc.paragraphs:
+        text = para.text.strip()
+        if text:
+            text_parts.append(text)
+
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                text = cell.text.strip()
+                if text and text not in text_parts:
+                    text_parts.append(text)
+
+    result = "\n".join(text_parts).strip()
+    if not result:
+        raise ValueError(
+            "Could not extract text from DOCX. Make sure the document contains readable text, "
+            "not just images or shapes."
+        )
+    return result
+
+
 def _extract_text_from_pdf(image_bytes: bytes) -> str:
     import pdfplumber
 
@@ -89,4 +122,7 @@ def extract_text_from_image(image_bytes: bytes) -> str:
     if _is_pdf(image_bytes):
         print("📄 PDF detected — extracting text directly (no Vision API needed).")
         return _extract_text_from_pdf(image_bytes)
+    if _is_docx(image_bytes):
+        print("📄 DOCX detected — extracting text directly (no Vision API needed).")
+        return _extract_text_from_docx(image_bytes)
     return _extract_text_from_image_bytes(image_bytes)
