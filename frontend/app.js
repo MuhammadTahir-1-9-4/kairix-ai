@@ -702,85 +702,257 @@ downloadBtn.addEventListener('click', () => {
   const f = currentFeedback;
 
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  const W = doc.internal.pageSize.getWidth();
-  const margin = 48;
-  const lineH = 16;
-  let y = margin;
+  const doc  = new jsPDF({ unit: 'pt', format: 'a4' });
+  const W    = doc.internal.pageSize.getWidth();
+  const H    = doc.internal.pageSize.getHeight();
+  const ML   = 44;               // left margin
+  const MR   = 44;               // right margin
+  const CW   = W - ML - MR;     // content width
+  const LH   = 14;               // base line height
+  let y      = ML;
+  let pageNum = 1;
 
-  const addText = (text, opts = {}) => {
-    const { size = 10, bold = false, color = [50, 50, 70], indent = 0, wrap = true } = opts;
+  // Strip non-ASCII to prevent jsPDF char-spacing bugs
+  const clean = s => (s || '').replace(/[^\x20-\x7E]/g, ' ').replace(/\s+/g, ' ').trim();
+
+  const score = Number(f.overall_score) || 0;
+  const scoreRgb = score >= 7 ? [34,197,94] : score >= 5 ? [245,158,11] : [239,68,68];
+
+  /* ── helpers ── */
+  function txt(str, opts = {}) {
+    const { size = 9.5, style = 'normal', color = [60,70,90], x = ML, maxW = CW } = opts;
     doc.setFontSize(size);
-    doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    doc.setFont('helvetica', style);
     doc.setTextColor(...color);
-    const maxW = W - margin * 2 - indent;
-    if (wrap) {
-      const lines = doc.splitTextToSize(text, maxW);
-      lines.forEach(line => {
-        if (y > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
-        doc.text(line, margin + indent, y);
-        y += lineH;
-      });
-    } else {
-      doc.text(text, margin + indent, y);
-      y += lineH;
-    }
-  };
-
-  const addSection = (title) => {
-    y += 8;
-    doc.setFillColor(99, 102, 241);
-    doc.rect(margin, y - 11, 3, lineH, 'F');
-    addText(title, { size: 11, bold: true, color: [99, 102, 241], indent: 10 });
-    y += 2;
-  };
-
-  const addListItems = (items) => {
-    (items || []).forEach(item => {
-      addText(`• ${item}`, { indent: 8 });
+    doc.setCharSpace(0);
+    const lines = doc.splitTextToSize(clean(str), maxW);
+    lines.forEach(line => {
+      checkPage(LH + 2);
+      doc.text(line, x, y);
+      y += LH;
     });
-  };
-
-  // Header
-  doc.setFillColor(8, 9, 13);
-  doc.rect(0, 0, W, 70, 'F');
-  doc.setFontSize(18); doc.setFont('helvetica', 'bold');
-  doc.setTextColor(255, 255, 255);
-  doc.text('Kairix AI — Career Intelligence Report', margin, 30);
-  doc.setFontSize(10); doc.setFont('helvetica', 'normal');
-  doc.setTextColor(139, 154, 181);
-  doc.text(`Score: ${f.overall_score}/10  |  Goal: ${(f.job_goal || '').substring(0, 60)}`, margin, 50);
-  y = 90;
-
-  addText(f.score_explanation || '', { color: [100, 110, 140] });
-  y += 4;
-  addText(`"${f.motivational_message || ''}"`, { bold: true, color: [99, 102, 241] });
-  y += 8;
-
-  addSection('What\'s Working');
-  addListItems(f.strengths);
-
-  addSection('Skill Gaps');
-  addListItems(f.skill_gaps);
-
-  addSection('CV Improvements');
-  addListItems(f.cv_improvements);
-
-  addSection('Action Plan');
-  (f.next_steps || []).forEach((s, i) => addText(`${i+1}. ${s}`, { indent: 8 }));
-
-  addSection('Interview Questions to Prepare');
-  (f.interview_questions || []).forEach((q, i) => addText(`Q${i+1}: ${q}`, { indent: 8 }));
-
-  addSection('Recommended Resources');
-  addListItems(f.recommended_resources);
-
-  if (f.jd_match && f.jd_match.match_score != null) {
-    addSection(`Job Description Match: ${f.jd_match.match_score}% (${f.jd_match.ats_verdict})`);
-    addText('Missing keywords: ' + (f.jd_match.missing_keywords || []).join(', '), { color: [239, 68, 68] });
-    addListItems(f.jd_match.jd_advice);
+    return lines.length;
   }
 
+  function checkPage(need = 20) {
+    if (y + need > H - 40) {
+      drawFooter();
+      doc.addPage();
+      pageNum++;
+      y = ML;
+    }
+  }
+
+  function drawFooter() {
+    doc.setDrawColor(210, 215, 230);
+    doc.setLineWidth(0.5);
+    doc.line(ML, H - 32, W - MR, H - 32);
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(160, 165, 185);
+    doc.setCharSpace(0);
+    doc.text('Kairix AI — Career Intelligence Report', ML, H - 20);
+    doc.text(`Page ${pageNum}`, W - MR, H - 20, { align: 'right' });
+  }
+
+  function sectionHeader(title, rgb) {
+    checkPage(36);
+    y += 10;
+    doc.setFillColor(...rgb);
+    doc.rect(ML, y - 2, 3, 17, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...rgb);
+    doc.setCharSpace(0);
+    doc.text(clean(title), ML + 10, y + 11);
+    y += 24;
+  }
+
+  function itemBlock(text, opts = {}) {
+    const { dotRgb = [120,130,150], indent = 14 } = opts;
+    const lines = doc.splitTextToSize(clean(text), CW - indent);
+    const bH = lines.length * LH + 8;
+    checkPage(bH + 4);
+    doc.setFillColor(248, 249, 252);
+    doc.roundedRect(ML, y, CW, bH, 3, 3, 'F');
+    doc.setFillColor(...dotRgb);
+    doc.circle(ML + 6, y + bH / 2, 2.2, 'F');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(50, 60, 80);
+    doc.setCharSpace(0);
+    lines.forEach((line, i) => { doc.text(line, ML + indent, y + 7 + i * LH); });
+    y += bH + 4;
+  }
+
+  function numberedBlock(num, text, rgb) {
+    const lines = doc.splitTextToSize(clean(text), CW - 22);
+    const bH = lines.length * LH + 8;
+    checkPage(bH + 4);
+    doc.setFillColor(248, 249, 252);
+    doc.roundedRect(ML, y, CW, bH, 3, 3, 'F');
+    doc.setFillColor(...rgb);
+    doc.circle(ML + 8, y + bH / 2, 7, 'F');
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.setCharSpace(0);
+    doc.text(String(num), ML + 8, y + bH / 2 + 2.5, { align: 'center' });
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(50, 60, 80);
+    doc.setCharSpace(0);
+    lines.forEach((line, i) => { doc.text(line, ML + 22, y + 7 + i * LH); });
+    y += bH + 4;
+  }
+
+  /* ══ HEADER ══ */
+  // Dark band
+  doc.setFillColor(11, 13, 20);
+  doc.rect(0, 0, W, 82, 'F');
+  // Accent top stripe
+  doc.setFillColor(99, 102, 241);
+  doc.rect(0, 0, W, 4, 'F');
+  // Brand
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(241, 245, 249);
+  doc.setCharSpace(0);
+  doc.text('Kairix AI', ML, 34);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(139, 154, 181);
+  doc.text('Career Intelligence Report', ML, 52);
+  // Goal
+  const goalStr = jobGoalText ? clean(jobGoalText).substring(0, 90) : '';
+  if (goalStr) {
+    doc.setFontSize(8);
+    doc.setTextColor(90, 105, 130);
+    doc.setCharSpace(0);
+    doc.text('Goal: ' + goalStr, ML, 68);
+  }
+  // Score badge
+  doc.setFillColor(...scoreRgb);
+  doc.roundedRect(W - MR - 68, 16, 68, 50, 8, 8, 'F');
+  doc.setFontSize(26);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(255, 255, 255);
+  doc.setCharSpace(0);
+  doc.text(`${score}`, W - MR - 34, 45, { align: 'center' });
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.text('/10', W - MR - 34, 58, { align: 'center' });
+
+  y = 100;
+
+  /* ── Score explanation ── */
+  txt(f.score_explanation || '', { size: 9, color: [90, 100, 120] });
+  y += 6;
+
+  /* ── Motivational quote ── */
+  const quoteLines = doc.splitTextToSize(`"${clean(f.motivational_message || '')}"`, CW - 18);
+  const quoteH = quoteLines.length * LH + 14;
+  checkPage(quoteH + 10);
+  doc.setFillColor(237, 238, 255);
+  doc.roundedRect(ML, y, CW, quoteH, 4, 4, 'F');
+  doc.setFillColor(99, 102, 241);
+  doc.rect(ML, y, 3, quoteH, 'F');
+  doc.setFontSize(9.5);
+  doc.setFont('helvetica', 'bolditalic');
+  doc.setTextColor(55, 55, 120);
+  doc.setCharSpace(0);
+  quoteLines.forEach((line, i) => { doc.text(line, ML + 12, y + 12 + i * LH); });
+  y += quoteH + 12;
+
+  /* ══ SECTIONS ══ */
+  sectionHeader("What's Working", [34,197,94]);
+  (f.strengths || []).forEach(s => itemBlock(s, { dotRgb: [34,197,94] }));
+
+  sectionHeader('Skill Gaps', [245,158,11]);
+  (f.skill_gaps || []).forEach(s => itemBlock(s, { dotRgb: [245,158,11] }));
+
+  sectionHeader('CV Improvements', [59,130,246]);
+  (f.cv_improvements || []).forEach(s => itemBlock(s, { dotRgb: [59,130,246] }));
+
+  sectionHeader('Action Plan', [99,102,241]);
+  (f.next_steps || []).forEach((s, i) => numberedBlock(i + 1, s, [99,102,241]));
+
+  sectionHeader('Interview Questions to Prepare', [168,85,247]);
+  (f.interview_questions || []).forEach((q, i) => {
+    const lines = doc.splitTextToSize(clean(q), CW - 22);
+    const bH = lines.length * LH + 8;
+    checkPage(bH + 4);
+    doc.setFillColor(250, 248, 255);
+    doc.roundedRect(ML, y, CW, bH, 3, 3, 'F');
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(168, 85, 247);
+    doc.setCharSpace(0);
+    doc.text(`Q${i+1}`, ML + 6, y + 7 + (bH / 2) - 4);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(55, 60, 80);
+    doc.setCharSpace(0);
+    lines.forEach((line, li) => { doc.text(line, ML + 22, y + 7 + li * LH); });
+    y += bH + 4;
+  });
+
+  sectionHeader('Recommended Resources', [59,130,246]);
+  (f.recommended_resources || []).forEach((r, i) => {
+    const parts  = r.split(' — ');
+    const name   = clean(parts[0] || r);
+    const why    = clean(parts.slice(1).join(' — '));
+    const whyLines = why ? doc.splitTextToSize(why, CW - 18) : [];
+    const bH = LH + (whyLines.length ? whyLines.length * (LH - 1) + 4 : 0) + 10;
+    checkPage(bH + 4);
+    doc.setFillColor(240, 246, 255);
+    doc.roundedRect(ML, y, CW, bH, 3, 3, 'F');
+    doc.setFillColor(59, 130, 246);
+    doc.circle(ML + 8, y + 7 + LH / 2 - 4, 6, 'F');
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(255, 255, 255);
+    doc.setCharSpace(0);
+    doc.text(`${i+1}`, ML + 8, y + 7 + LH / 2 - 1.5, { align: 'center' });
+    doc.setFontSize(9.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(30, 40, 70);
+    doc.setCharSpace(0);
+    doc.text(name, ML + 20, y + 9);
+    if (whyLines.length) {
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 115, 140);
+      doc.setCharSpace(0);
+      whyLines.forEach((line, li) => { doc.text(line, ML + 20, y + 9 + LH + li * (LH - 1)); });
+    }
+    y += bH + 4;
+  });
+
+  /* ── JD Match ── */
+  if (f.jd_match && f.jd_match.match_score != null) {
+    const jdRgb = f.jd_match.match_score >= 70 ? [34,197,94] : f.jd_match.match_score >= 45 ? [245,158,11] : [239,68,68];
+    sectionHeader(`ATS Match: ${f.jd_match.match_score}%  —  ${f.jd_match.ats_verdict}`, jdRgb);
+
+    if ((f.jd_match.missing_keywords || []).length) {
+      checkPage(24);
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(239, 68, 68);
+      doc.setCharSpace(0);
+      doc.text('Missing keywords:', ML, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(60, 70, 90);
+      const kwLines = doc.splitTextToSize(clean(f.jd_match.missing_keywords.join(', ')), CW - 105);
+      doc.text(kwLines[0] || '', ML + 105, y);
+      y += LH;
+      kwLines.slice(1).forEach(line => { checkPage(LH); doc.text(line, ML, y); y += LH; });
+      y += 4;
+    }
+    (f.jd_match.jd_advice || []).forEach(s => itemBlock(s, { dotRgb: jdRgb }));
+  }
+
+  drawFooter();
   doc.save('kairix-career-report.pdf');
 });
 
