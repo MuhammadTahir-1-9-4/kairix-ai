@@ -938,6 +938,16 @@ function initScrollReveal() {
   els.forEach(el => observer.observe(el));
 }
 
+/* ─── PREVENT SPACEBAR PAGE SCROLL ─── */
+window.addEventListener('keydown', e => {
+  if (e.code === 'Space') {
+    const tag = document.activeElement ? document.activeElement.tagName : '';
+    if (!['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT', 'A'].includes(tag)) {
+      e.preventDefault();
+    }
+  }
+});
+
 /* ─── BOOT ─── */
 setStep(1);
 setVoiceState('idle');
