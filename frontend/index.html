@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kairix — AI Career Intelligence Platform</title>
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 <body>
 
@@ -55,17 +55,16 @@
         </h1>
 
         <p class="hero-sub">
-          Upload your CV, describe your dream role, and receive a deep AI analysis — skill gaps, ATS score, interview prep, and a personalized roadmap in under 30 seconds.
+          Instant, AI-powered CV analysis that boosts your score and lands interviews. In 30 seconds.
         </p>
 
         <div class="hero-actions">
           <div class="hero-cta-row">
             <a class="hero-cta" href="#form-section">
-              <span>Analyze My CV Free</span>
+              <span>Improve Your CV Now</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <button class="hero-cta-secondary" id="sampleReportBtn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               View Sample Report
             </button>
           </div>
@@ -74,80 +73,94 @@
 
         <div class="hero-proof">
           <div class="proof-item">
+            <span class="proof-val">50k+</span>
+            <span class="proof-label">Users Trusted</span>
+          </div>
+          <div class="proof-sep"></div>
+          <div class="proof-item">
+            <span class="proof-val">700k+</span>
+            <span class="proof-label">CVs Analyzed</span>
+          </div>
+          <div class="proof-sep"></div>
+          <div class="proof-item">
             <span class="proof-val">30s</span>
-            <span class="proof-label">Report time</span>
-          </div>
-          <div class="proof-sep"></div>
-          <div class="proof-item">
-            <span class="proof-val">10+</span>
-            <span class="proof-label">Dimensions</span>
-          </div>
-          <div class="proof-sep"></div>
-          <div class="proof-item">
-            <span class="proof-val">100%</span>
-            <span class="proof-label">Private</span>
+            <span class="proof-label">Report Time</span>
           </div>
         </div>
 
-        <p class="hero-used-by">Used by aspiring data scientists, software engineers, PMs &amp; career switchers</p>
+        <p class="hero-used-by">Trusted by data scientists, engineers, PMs &amp; career switchers worldwide</p>
       </div>
 
-      <!-- RIGHT: Floating Preview -->
+      <!-- RIGHT: BEFORE / AFTER Comparison -->
       <div class="hero-right">
-        <div class="hero-preview">
-          <div class="preview-live-tag">
-            <span class="preview-live-dot"></span>
-            Live Analysis Preview
+        <div class="hero-comparison">
+
+          <!-- BEFORE side -->
+          <div class="hcomp-side hcomp-before">
+            <div class="hcomp-tag htag-before">Before</div>
+            <div class="hcomp-doc">
+              <div class="hcd-name"></div>
+              <div class="hcd-role"></div>
+              <div class="hcd-divider"></div>
+              <div class="hcd-section">
+                <div class="hcd-label"></div>
+                <div class="hcd-line hcdl-80"></div>
+                <div class="hcd-line hcdl-60"></div>
+                <div class="hcd-line hcdl-75"></div>
+              </div>
+              <div class="hcd-section">
+                <div class="hcd-label"></div>
+                <div class="hcd-line hcdl-90"></div>
+                <div class="hcd-line hcdl-50"></div>
+                <div class="hcd-line hcdl-70"></div>
+              </div>
+            </div>
+            <div class="hcomp-score hcomp-score-bad">
+              <span class="hcs-label">CV Score</span>
+              <span class="hcs-val hcs-val-bad">4 / 10</span>
+            </div>
           </div>
 
-          <div class="preview-score-row">
-            <div class="preview-ring-wrap">
-              <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
-                <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
-                <circle cx="36" cy="36" r="28" fill="none" stroke="#22c55e" stroke-width="5"
-                  stroke-dasharray="176" stroke-dashoffset="35" stroke-linecap="round"/>
+          <!-- ARROW -->
+          <div class="hcomp-arrow">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="17" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+              <circle cx="18" cy="18" r="17" fill="rgba(99,102,241,0.09)"/>
+              <path d="M12 18h12M21 14l4 4-4 4" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="hcomp-ai-label">Kairix AI</span>
+          </div>
+
+          <!-- AFTER side -->
+          <div class="hcomp-side hcomp-after">
+            <div class="hcomp-tag htag-after">After</div>
+            <div class="hcomp-ring-wrap">
+              <svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg)">
+                <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(34,197,94,0.1)" stroke-width="6"/>
+                <circle cx="40" cy="40" r="32" fill="none" stroke="#22c55e" stroke-width="6"
+                  stroke-dasharray="201.1" stroke-dashoffset="18.1" stroke-linecap="round"/>
               </svg>
-              <div class="preview-ring-num">8<span>/10</span></div>
+              <div class="hcomp-ring-center">
+                <span class="hcomp-ring-num">91</span>
+                <span class="hcomp-ring-denom">/100</span>
+              </div>
             </div>
-            <div class="preview-score-info">
-              <div class="preview-score-badge">Strong Profile</div>
-              <div class="preview-score-role">Senior Data Analyst · Fintech</div>
-              <div class="preview-score-sub">Above average for this role</div>
-            </div>
-          </div>
-
-          <div class="preview-insights">
-            <div class="preview-insight pi-green">
-              <span class="pi-dot pi-dot-green"></span>
-              <span>Strong Python &amp; SQL foundation</span>
-            </div>
-            <div class="preview-insight pi-amber">
-              <span class="pi-dot pi-dot-amber"></span>
-              <span>Missing: dbt, Airflow experience</span>
-            </div>
-            <div class="preview-insight pi-blue">
-              <span class="pi-dot pi-dot-blue"></span>
-              <span>Add quantified achievements</span>
+            <div class="hcomp-checks">
+              <div class="hcomp-check-item">
+                <span class="hcc-icon">✓</span>
+                <span>ATS Score 94%</span>
+              </div>
+              <div class="hcomp-check-item">
+                <span class="hcc-icon">✓</span>
+                <span>All Keywords Found</span>
+              </div>
+              <div class="hcomp-check-item">
+                <span class="hcc-icon">✓</span>
+                <span>Interview Ready</span>
+              </div>
             </div>
           </div>
 
-          <div class="preview-ats">
-            <div class="preview-ats-header">
-              <span>ATS Match Score</span>
-              <span class="preview-ats-pct">72%</span>
-            </div>
-            <div class="preview-ats-track">
-              <div class="preview-ats-fill" style="width:72%"></div>
-            </div>
-          </div>
-
-          <div class="preview-kw">
-            <span class="preview-chip chip-green">✓ Python</span>
-            <span class="preview-chip chip-green">✓ SQL</span>
-            <span class="preview-chip chip-green">✓ Pandas</span>
-            <span class="preview-chip chip-red">✗ dbt</span>
-            <span class="preview-chip chip-red">✗ Tableau</span>
-          </div>
         </div>
       </div>
     </div>
@@ -156,122 +169,125 @@
   <!-- TRUST BAR -->
   <div class="trust-bar">
     <div class="trust-inner">
-      <span class="trust-label">Powered by</span>
-      <div class="trust-stack">
-        <span class="trust-item">🤖 Llama 3.3 70B</span>
-        <span class="trust-sep"></span>
-        <span class="trust-item">👁️ Google Cloud Vision</span>
-        <span class="trust-sep"></span>
-        <span class="trust-item">🧠 ChromaDB RAG</span>
-        <span class="trust-sep"></span>
-        <span class="trust-item">⚡ Groq Inference</span>
-        <span class="trust-sep"></span>
-        <span class="trust-item">🔄 n8n Automation</span>
+      <span class="trust-label">Professionals at top companies improve their CVs with Kairix</span>
+      <div class="trust-logos">
+        <span class="tlogo">Google</span>
+        <span class="tlogo-sep">·</span>
+        <span class="tlogo">Meta</span>
+        <span class="tlogo-sep">·</span>
+        <span class="tlogo">Amazon</span>
+        <span class="tlogo-sep">·</span>
+        <span class="tlogo">Microsoft</span>
+        <span class="tlogo-sep">·</span>
+        <span class="tlogo">Deloitte</span>
+        <span class="tlogo-sep">·</span>
+        <span class="tlogo">McKinsey</span>
       </div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
-  <section class="hiw" id="how-it-works">
+  <!-- PROCESS TIMELINE -->
+  <section class="timeline" id="how-it-works">
     <div class="section-inner">
       <div class="section-eyebrow reveal">Process</div>
       <h2 class="section-h2 reveal reveal-delay-1">From CV upload to career clarity<br><em class="gradient-text">in 30 seconds</em></h2>
       <p class="section-sub reveal reveal-delay-2">Three intelligent steps powered by production-grade AI</p>
 
-      <div class="hiw-grid">
-        <div class="hiw-card reveal reveal-delay-1">
-          <div class="hiw-num">01</div>
-          <div class="hiw-icon-wrap">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <div class="tl-grid">
+        <div class="tl-step reveal reveal-delay-1">
+          <div class="tl-num">01</div>
+          <div class="tl-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
               <line x1="12" y1="18" x2="12" y2="12"/>
               <line x1="9" y1="15" x2="15" y2="15"/>
             </svg>
           </div>
-          <h3>Upload Your CV</h3>
-          <p>Drop a PDF or image. Google Cloud Vision OCR extracts every detail — experience, skills, education — with high precision.</p>
+          <h3 class="tl-title">Upload Your CV</h3>
+          <p class="tl-desc">Simple drag &amp; drop. Supports PDF, DOCX, JPG, and PNG. Google Cloud Vision extracts every detail with high precision.</p>
         </div>
-        <div class="hiw-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+        <div class="tl-connector">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
         </div>
-        <div class="hiw-card reveal reveal-delay-2">
-          <div class="hiw-num">02</div>
-          <div class="hiw-icon-wrap">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-              <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/>
-              <path d="M22 2 12 12"/><circle cx="22" cy="2" r="2"/>
+
+        <div class="tl-step reveal reveal-delay-2">
+          <div class="tl-num">02</div>
+          <div class="tl-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
             </svg>
           </div>
-          <h3>AI Analyses Everything</h3>
-          <p>Llama 3.3 70B cross-references your CV against our RAG knowledge base — 2025 market data, salary benchmarks, and role requirements.</p>
+          <h3 class="tl-title">Deep AI Analysis</h3>
+          <p class="tl-desc">Llama 3.3 70B cross-references your CV with 2025 job market data, salary benchmarks, and role requirements via RAG.</p>
         </div>
-        <div class="hiw-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+        <div class="tl-connector">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
         </div>
-        <div class="hiw-card hiw-card-accent reveal reveal-delay-3">
-          <div class="hiw-num">03</div>
-          <div class="hiw-icon-wrap">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+
+        <div class="tl-step tl-step-accent reveal reveal-delay-3">
+          <div class="tl-num">03</div>
+          <div class="tl-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
           </div>
-          <h3>Get Your Intelligence Report</h3>
-          <p>ATS score, skill gaps, interview questions, curated resources, and a personalized roadmap — delivered instantly and to your inbox.</p>
+          <h3 class="tl-title">Actionable Insights</h3>
+          <p class="tl-desc">Score ring, ATS keywords, skill gaps, interview questions, and a personalized roadmap — delivered in under 30 seconds.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section class="features" id="features">
+  <!-- POWER PILLARS -->
+  <section class="pillars" id="features">
     <div class="section-inner">
       <div class="section-eyebrow reveal">Capabilities</div>
-      <h2 class="section-h2 reveal reveal-delay-1">Everything your career advisor<br><em class="gradient-text">should be telling you</em></h2>
+      <h2 class="section-h2 reveal reveal-delay-1">Three pillars of<br><em class="gradient-text">career intelligence</em></h2>
 
-      <div class="feat-grid">
-        <div class="feat-card feat-large reveal reveal-delay-1">
-          <div class="feat-icon-wrap feat-icon-purple">🎯</div>
-          <h3>ATS Simulation</h3>
-          <p>Paste a real job description. Get a keyword match score, identify missing keywords, and receive specific tweaks to pass automated screening systems used by 99% of recruiters.</p>
-          <div class="feat-badge">Most Requested</div>
+      <div class="pillar-grid">
+
+        <div class="pillar-card reveal reveal-delay-1">
+          <div class="pillar-icon pillar-icon-1">🎯</div>
+          <h3 class="pillar-title">Match Recruiter Insights</h3>
+          <p class="pillar-desc">See your CV exactly as a recruiter sees it. Pinpoint missing keywords, weak sections, and formatting issues that cause automatic rejection — before you even apply.</p>
+          <div class="pillar-metrics">
+            <div class="pm-item"><span class="pm-label">ATS Simulation</span></div>
+            <div class="pm-item"><span class="pm-label">Keyword Match Percentage</span></div>
+            <div class="pm-item"><span class="pm-label">Red Flag Detection</span></div>
+          </div>
         </div>
-        <div class="feat-card reveal reveal-delay-2">
-          <div class="feat-icon-wrap feat-icon-amber">⚡</div>
-          <h3>Skill Gap Detection</h3>
-          <p>Pinpoints the exact skills separating you from your target role — not generic advice.</p>
+
+        <div class="pillar-card pillar-card-accent reveal reveal-delay-2">
+          <div class="pillar-icon pillar-icon-2">⚡</div>
+          <h3 class="pillar-title">Optimize for ATS Keywords</h3>
+          <p class="pillar-desc">Paste any job description and instantly see your match percentage. Get the exact keywords to add — role-specific, not generic lists that waste your time.</p>
+          <div class="pillar-metrics">
+            <div class="pm-item"><span class="pm-label">Missing Keyword List</span></div>
+            <div class="pm-item"><span class="pm-label">Match Score</span></div>
+            <div class="pm-item"><span class="pm-label">Tailored CV Fixes</span></div>
+          </div>
         </div>
-        <div class="feat-card reveal reveal-delay-3">
-          <div class="feat-icon-wrap feat-icon-blue">🗺️</div>
-          <h3>Career Roadmap</h3>
-          <p>Concrete next steps you can take this week. No fluff, just prioritized actions.</p>
+
+        <div class="pillar-card reveal reveal-delay-3">
+          <div class="pillar-icon pillar-icon-3">📊</div>
+          <h3 class="pillar-title">Elevate Your Impact Score</h3>
+          <p class="pillar-desc">Transform a flat task-listing CV into a high-impact story. Quantify achievements, strengthen action verbs, and build a narrative that makes interviewers lean forward.</p>
+          <div class="pillar-metrics">
+            <div class="pm-item"><span class="pm-label">Impact Score Rating</span></div>
+            <div class="pm-item"><span class="pm-label">Action Verb Analysis</span></div>
+            <div class="pm-item"><span class="pm-label">Achievement Mapping</span></div>
+          </div>
         </div>
-        <div class="feat-card reveal reveal-delay-4">
-          <div class="feat-icon-wrap feat-icon-green">💬</div>
-          <h3>Interview Prep</h3>
-          <p>Role-specific questions generated from your actual CV gaps. Practice before you apply.</p>
-        </div>
-        <div class="feat-card reveal reveal-delay-1">
-          <div class="feat-icon-wrap feat-icon-purple">📚</div>
-          <h3>Resource Curation</h3>
-          <p>Targeted courses and certifications to close your specific gaps. No generic lists.</p>
-        </div>
-        <div class="feat-card reveal reveal-delay-2">
-          <div class="feat-icon-wrap feat-icon-blue">🎙️</div>
-          <h3>Voice Input</h3>
-          <p>Describe your career goal out loud. Speech AI transcribes it instantly.</p>
-        </div>
-        <div class="feat-card reveal reveal-delay-3">
-          <div class="feat-icon-wrap feat-icon-amber">📄</div>
-          <h3>PDF Export</h3>
-          <p>Download your full career intelligence report as a polished PDF to share or archive.</p>
-        </div>
-        <div class="feat-card reveal reveal-delay-4">
-          <div class="feat-icon-wrap feat-icon-green">🧠</div>
-          <h3>RAG Intelligence</h3>
-          <p>2025 market data, salary benchmarks, and role requirements from our knowledge base.</p>
-        </div>
+
       </div>
     </div>
   </section>
@@ -590,8 +606,8 @@
   <!-- TESTIMONIALS -->
   <section class="testimonials">
     <div class="section-inner">
-      <div class="section-eyebrow reveal">Testimonials</div>
-      <h2 class="section-h2 reveal reveal-delay-1">What career switchers<br><em class="gradient-text">are saying</em></h2>
+      <div class="section-eyebrow reveal">Social Proof</div>
+      <h2 class="section-h2 reveal reveal-delay-1">Why Hundreds of Professionals<br><em class="gradient-text">Choose Kairix</em></h2>
       <div class="testi-grid">
         <div class="testi-card reveal reveal-delay-1">
           <div class="testi-stars">★★★★★</div>
@@ -630,6 +646,53 @@
     </div>
   </section>
 
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="section-inner">
+      <div class="fcta-card">
+        <div class="fcta-eyebrow">Get started — it's free</div>
+        <h2 class="fcta-h2">Ready for clarity?</h2>
+        <p class="fcta-sub">Find out your CV score in under 30 seconds.<br>No account. No credit card. 100% private.</p>
+        <a class="hero-cta fcta-btn" href="#form-section">
+          <span>Analyze My CV Free</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="fcta-note">30-second analysis · 10+ dimensions · Instant PDF download</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="section-inner">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-h2">Common questions</h2>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-q">Is my CV data private and secure?</summary>
+          <p class="faq-a">Yes. Your CV is processed in-memory only and never stored on our servers. Each session is completely isolated. We do not train on your data or share it with any third parties.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">What file formats does Kairix accept?</summary>
+          <p class="faq-a">Kairix accepts PDF, DOCX, JPG, PNG, and WEBP files up to 10 MB. For scanned CVs or photos of physical documents, use JPG or PNG — Google Cloud Vision will extract the text automatically.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">How accurate is the AI analysis?</summary>
+          <p class="faq-a">The analysis is powered by Llama 3.3 70B (via Groq) with a RAG knowledge base of 2025 job market data. It provides highly contextual, role-specific feedback — not generic advice. Results are most accurate when you paste a job description to enable ATS matching.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Do I need to create an account?</summary>
+          <p class="faq-a">No account required. Upload your CV, describe your goal, and receive your full intelligence report instantly — for free. You can optionally enter your email to receive the report in your inbox.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Which browsers support the voice input feature?</summary>
+          <p class="faq-a">Voice input works in Google Chrome and Microsoft Edge. Firefox has limited support for the Web Speech API. You can always type your career goal manually — the analysis quality is identical either way.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
@@ -641,8 +704,8 @@
         </div>
         <span class="brand-name">Kairix<span class="brand-ai">AI</span></span>
       </div>
-      <span class="ft-copy">Powered by Llama 3.3 70B · Google Cloud Vision · ChromaDB RAG · n8n Automation</span>
-      <span class="ft-right">AI Portfolio 2 · 2025</span>
+      <span class="ft-copy">Powered by Llama 3.3 70B · Google Cloud Vision · ChromaDB RAG · Groq Inference</span>
+      <span class="ft-right">AI Portfolio · 2025</span>
     </div>
   </footer>
 
