@@ -2,7 +2,8 @@
 
 /* ─── RESET ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { overflow-x: hidden; }
 .hidden { display: none !important; }
 
 /* ─── TOKENS ─── */
@@ -41,7 +42,6 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* ─── CURSOR GLOW ─── */
@@ -1254,26 +1254,118 @@ details[open] > .faq-q::after { transform: rotate(45deg); color: var(--t3); }
 
 /* ─── HERO RESPONSIVE ─── */
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero-right { display: flex; justify-content: center; }
-  .hero-h1 { font-size: 2.4rem; }
-  .hero-cta { width: 100%; justify-content: center; }
-  .hero-cta-secondary { width: 100%; justify-content: center; }
-  .hero-comparison { max-width: 420px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-right  { display: flex; justify-content: center; }
+  .hero-h1     { font-size: 2.4rem; }
+  .hero-cta    { width: 100%; justify-content: center; box-sizing: border-box; }
+  .hero-cta-secondary { width: 100%; justify-content: center; box-sizing: border-box; }
+  .hero-comparison { max-width: min(420px, 100%); }
 }
+
+/* ─── MOBILE (≤ 580px) ─── */
 @media (max-width: 580px) {
-  .hero { padding: 64px 20px 56px; }
-  .hero-h1 { font-size: 2rem; }
-  .section-h2 { font-size: 1.7rem; }
-  .timeline { padding: 64px 0; }
-  .pillars { padding: 64px 0; }
-  .testimonials { padding: 64px 0; }
-  .form-section { padding: 64px 0 0; }
-  .hero-comparison { grid-template-columns: 1fr 36px 1fr; gap: 8px; padding: 14px; }
+  /* Hero spacing */
+  .hero      { padding: 52px 16px 48px; overflow-x: hidden; }
+  .hero-left { max-width: 100%; }
+  .hero-h1   { font-size: 1.95rem; line-height: 1.15; }
+  .hero-sub  { font-size: 0.9rem; margin-bottom: 24px; }
+  .hero-actions { margin-bottom: 24px; }
+  .hero-cta-note { font-size: 0.72rem; }
+
+  /* Make proof stats fill available width evenly */
+  .hero-proof    { display: flex; width: 100%; border-radius: 10px; }
+  .proof-item    { flex: 1; padding: 10px 8px; }
+  .proof-val     { font-size: 1.1rem; }
+  .proof-label   { font-size: 0.58rem; }
+
+  /* Comparison card — tighter on phone */
+  .hero-comparison {
+    grid-template-columns: 1fr 30px 1fr;
+    gap: 6px;
+    padding: 12px;
+    max-width: 100%;
+  }
+  .hcomp-side    { padding: 10px; gap: 7px; }
+  .hcomp-ring-wrap { width: 66px; height: 66px; }
+  .hcomp-ring-num  { font-size: 1.3rem; }
+  .hcomp-check-item { font-size: 0.64rem; gap: 4px; }
+  .hcc-icon      { width: 12px; height: 12px; font-size: 0.48rem; }
+  .hcomp-tag     { font-size: 0.5rem; padding: 2px 7px; }
+  .hcs-val       { font-size: 0.88rem; }
+  .hcs-label     { font-size: 0.52rem; }
+  .hcomp-ai-label { font-size: 0.5rem; }
+
+  /* Section padding */
+  .section-inner { padding: 0 16px; }
+  .section-h2    { font-size: 1.6rem; }
+  .section-sub   { font-size: 0.92rem; margin-bottom: 40px; }
+
+  /* Timeline */
+  .timeline  { padding: 60px 0; }
+  .tl-num    { font-size: 2.2rem; }
+  .tl-title  { font-size: 1.05rem; }
+  .tl-desc   { font-size: 0.84rem; max-width: 100%; }
+  .tl-step   { padding: 28px 20px; }
+  .tl-icon-wrap { width: 44px; height: 44px; }
+
+  /* Pillars */
+  .pillars   { padding: 60px 0; }
+  .pillar-grid { gap: 14px; margin-top: 40px; }
   .pillar-card { padding: 28px 20px; }
-  .pillar-title { font-size: 1.15rem; }
+  .pillar-title { font-size: 1.1rem; }
+  .pillar-desc  { font-size: 0.88rem; }
+  .pillar-icon  { width: 52px; height: 52px; font-size: 1.3rem; }
+
+  /* Trust bar */
+  .trust-bar { padding: 16px 16px; }
+  .tlogo     { font-size: 0.72rem; }
+
+  /* Testimonials */
+  .testimonials  { padding: 60px 0; }
+  .testi-card    { padding: 24px 18px; }
+  .testi-quote   { font-size: 0.88rem; }
+
+  /* Final CTA */
+  .final-cta { padding: 40px 0; }
+  .fcta-card { padding: 52px 20px; }
+  .fcta-h2   { font-size: 2.2rem; }
+  .fcta-sub  { font-size: 0.95rem; }
+  .fcta-btn  { width: 100%; justify-content: center; }
+
+  /* FAQ */
+  .faq-section { padding: 60px 0 80px; }
+  .faq-q { font-size: 0.92rem; padding: 20px 0; }
+  .faq-a { font-size: 0.88rem; padding-bottom: 20px; }
+
+  /* Form */
+  .form-section { padding: 52px 0 0; }
+  .main { padding: 0 16px 60px; }
+  .form-wrap { padding-top: 28px; }
+  .fcard { padding: 20px 16px; }
+  .fcard-minor { padding: 18px 16px; }
+  .fcard-title { font-size: 0.92rem; }
+
+  /* Footer */
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .ft-copy { text-align: left; }
 }
-@media (max-width: 380px) {
-  .hcomp-ring-num { font-size: 1.2rem; }
-  .hcomp-check-item { font-size: 0.62rem; }
+
+/* ─── SMALL PHONES (≤ 400px) ─── */
+@media (max-width: 400px) {
+  .hero   { padding: 44px 14px 40px; }
+  .hero-h1 { font-size: 1.7rem; }
+  .hero-comparison {
+    grid-template-columns: 1fr 26px 1fr;
+    gap: 5px;
+    padding: 10px;
+  }
+  .hcomp-ring-wrap  { width: 56px; height: 56px; }
+  .hcomp-ring-num   { font-size: 1.1rem; }
+  .hcomp-check-item { font-size: 0.58rem; }
+  .proof-item   { padding: 8px 6px; }
+  .proof-val    { font-size: 0.95rem; }
+  .proof-label  { font-size: 0.52rem; }
+  .pillar-title { font-size: 1rem; }
+  .tl-title     { font-size: 0.95rem; }
+  .section-inner { padding: 0 14px; }
 }
