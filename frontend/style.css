@@ -61,13 +61,16 @@ body {
 
 /* ─── NAV ─── */
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   border-bottom: 1px solid var(--border);
   background: rgba(8,10,15,0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 .nav-inner {
   max-width: 1100px;
@@ -129,7 +132,7 @@ body {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 96px 28px 80px;
+  padding: 154px 28px 80px;
   background: var(--bg);
 }
 
