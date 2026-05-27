@@ -29,3 +29,16 @@ Thumbs.db
 .vscode/
 .idea/
 *.code-workspace
+
+# Claude Code internal files
+.claude/
+
+# PPT generation script and temp files
+generate_ppt.py
+*.pptx
+~$*
+
+# Video files
+*.mp4
+*.mov
+*.avi
