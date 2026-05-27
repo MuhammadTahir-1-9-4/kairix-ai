@@ -104,8 +104,8 @@ Kairix AI (from *Kairos* — the Greek concept of the perfect moment) helps job 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/MuhammadTahir-1-9-4/careerlens-ai.git
-cd careerlens-ai
+git clone https://github.com/MuhammadTahir-1-9-4/kairix-ai.git
+cd kairix-ai
 ```
 
 ### 2. Create and activate a virtual environment
