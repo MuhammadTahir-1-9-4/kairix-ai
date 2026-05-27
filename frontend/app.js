@@ -9,7 +9,7 @@ let loadingMsgInterval = null;
 
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:8000'
-  : 'https://careerlens-ai-production-817d.up.railway.app';
+  : 'https://mtahir194-kairix-ai-backend.hf.space';
 const RING_C   = 364.42; // 2π × 58
 
 /* ─── DOM REFS ─── */

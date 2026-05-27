@@ -25,7 +25,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"status": "CareerLens AI is running", "version": "1.0.0"}
+    return {"status": "Kairix AI is running", "version": "1.0.0"}
 
 
 @app.get("/health")
